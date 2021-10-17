@@ -1,2 +1,8 @@
-.env
+# Djano #
 __pycache__/
+db.sqlite3
+
+# enviroments #
+.env
+.VENV
+venv/
