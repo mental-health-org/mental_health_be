@@ -1,5 +1,6 @@
 # DJANGO #
 __pycache__/
+*.pyc
 db.sqlite3
 
 # ENVIROMENTS #
@@ -10,3 +11,4 @@ venv/
 
 # TESTING #
 .pytest_cache/
+htmlcov/

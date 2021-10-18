@@ -7,6 +7,9 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.8
+      - image: circleci/postgres:9.6-alpine-ram
+        environment:
+          TEST_DATABASE_RUL: postgressql://root@localhost/circle_test
     steps:
       - checkout
       - python/install-packages:
@@ -17,7 +20,7 @@ jobs:
             python3 -m virtualenv venv
             source venv/bin/activate
             pip install -r requirements.txt
-            pytest
+            python3 ./manage.py test api/test
 
 workflows:
   sample:
