@@ -13,6 +13,7 @@ iniconfig==1.1.1
 packaging==21.0
 platformdirs==2.4.0
 pluggy==1.0.0
+psycopg2==2.9.1
 py==1.10.0
 pyparsing==2.4.7
 pytest==6.2.5
