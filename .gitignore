@@ -1,0 +1,12 @@
+# DJANGO #
+__pycache__/
+db.sqlite3
+
+# ENVIROMENTS #
+.env
+.VENV
+venv/
+
+
+# TESTING #
+.pytest_cache/
