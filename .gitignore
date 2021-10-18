@@ -10,3 +10,4 @@ venv/
 
 # TESTING #
 .pytest_cache/
+htmlcov/
