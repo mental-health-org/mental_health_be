@@ -1,8 +1,7 @@
-from api.models import User
-from api.models import Post
+from api.models import User, Post, Tag
 from django.test import TestCase
 
-class UserTestCase(TestCase):
+class TestUserCase(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -12,7 +11,7 @@ class UserTestCase(TestCase):
         expect_representation_user = "Orson Wells"
         self.assertEqual(expect_representation_user, str(self.user.username))
 
-class PostTestCase(TestCase):
+class TestPostCase(TestCase):
 
     def setUp(self):
         self.user = User.objects.create(username = 'Orson Wells')
@@ -31,3 +30,12 @@ class PostTestCase(TestCase):
         self.assertEqual(expect_representation_post, str(self.post))
         self.assertEqual(0, self.post.upvote)
         self.assertEqual(0, self.post.downvote)
+
+class TestTagCase(TestCase):
+
+    def setUp(self):
+        self.tag = Tag.objects.create(name = 'Help')
+
+    def test_creation_of_tag(self):
+        tag_name = 'Help'
+        self.assertEqual(tag_name, self.tag.name)
