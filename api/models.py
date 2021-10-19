@@ -21,3 +21,8 @@ class Post(models.Model):
 
     def __str__(self):
         return 'belongs to: ' + self.user.username + ' title: ' + self.title + ' body: ' + self.body
+
+class Tag(models.Model):
+    name = models.CharField(max_length = 30)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
