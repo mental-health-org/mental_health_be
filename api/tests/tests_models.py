@@ -39,3 +39,20 @@ class TestTagCase(TestCase):
     def test_creation_of_tag(self):
         tag_name = 'Help'
         self.assertEqual(tag_name, self.tag.name)
+
+class TestTaggingCase(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(username = 'Orson Wells')
+        self.tag = Tag.objects.create(name = 'Help')
+        self.tag2 = Tag.objects.create(name = 'Not This one')
+        self.post = Post.objects.create(
+            user = self.user,
+            title = 'Test Title',
+            body = 'ipsum lorem'
+        )
+        self.post.tagging.add(self.tag)
+
+    def test_tagging(self):
+        self.assertEqual(1, self.post.tagging.all().count())
+        self.assertEqual(self.tag, self.post.tagging.first())
