@@ -9,3 +9,21 @@ class User(models.Model):
     })
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+
+class Tag(models.Model):
+    name = models.CharField(max_length = 30)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length = 50)
+    body = models.CharField(max_length = 1000)
+    upvote = models.IntegerField(default = 0)
+    downvote = models.IntegerField(default = 0)
+    tagging = models.ManyToManyField(Tag)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+    def __str__(self):
+        return 'belongs to: ' + self.user.username + ' title: ' + self.title + ' body: ' + self.body
