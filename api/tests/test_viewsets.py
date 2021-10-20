@@ -29,3 +29,25 @@ class TestQuestionsViewSets(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['id'], self.post2.id)
         self.assertEqual(response.data['title'], self.post2.title)
+
+class TestTagsViewSets(TestCase):
+
+    def setUp(self):
+        # Create Objects
+        self.tag = Tag.objects.create(name = 'addiction')
+        self.tag2 = Tag.objects.create(name = 'child therapy')
+
+        # Get URL's
+        self.list_url = reverse('tags-list')
+        self.detail_url = reverse('tags-detail', args={self.tag2.id})
+
+    def test_questions_list(self):
+        response = self.client.get(self.list_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 2)
+
+    def test_questions_list(self):
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['id'], self.tag2.id)
+        self.assertEqual(response.data['name'], self.tag2.name)
