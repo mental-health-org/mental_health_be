@@ -24,7 +24,7 @@ class TestQuestionsViewSets(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 2)
 
-    def test_questions_list(self):
+    def test_questions_detail(self):
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['id'], self.post2.id)
@@ -40,14 +40,19 @@ class TestTagsViewSets(TestCase):
         # Get URL's
         self.list_url = reverse('tags-list')
         self.detail_url = reverse('tags-detail', args={self.tag2.id})
+        self.detail_url_404 = reverse('tags-detail', args={0})
 
-    def test_questions_list(self):
+    def test_tags_list(self):
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 2)
 
-    def test_questions_list(self):
+    def test_tags_detail(self):
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['id'], self.tag2.id)
         self.assertEqual(response.data['name'], self.tag2.name)
+
+    def test_tags_detail_404(self):
+        response = self.client.get(self.detail_url_404)
+        self.assertEqual(response.status_code, 404)
