@@ -18,6 +18,7 @@ class TestQuestionsViewSets(TestCase):
         # Get URL's
         self.list_url = reverse('questions-list')
         self.detail_url = reverse('questions-detail', args={self.post2.id})
+        self.detail_url_404 = reverse('questions-detail', args={0})
 
     def test_questions_list(self):
         response = self.client.get(self.list_url)
@@ -29,6 +30,10 @@ class TestQuestionsViewSets(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['id'], self.post2.id)
         self.assertEqual(response.data['title'], self.post2.title)
+
+    def test_questions_detail_404(self):
+        response = self.client.get(self.detail_url_404)
+        self.assertEqual(response.status_code, 404)
 
 class TestTagsViewSets(TestCase):
 
