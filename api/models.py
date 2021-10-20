@@ -39,8 +39,8 @@ class Post(models.Model):
 
 class Response(models.Model):
     body = models.TextField
-    user = models.ForeignKey, on_delete=models.CASCADE)
-    post = models.ForeignKey, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     vote_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
