@@ -4,5 +4,3 @@ from .models import User, Post, Tag
 import json
 
 # Create your views here.
-
-def questions_list(request):
