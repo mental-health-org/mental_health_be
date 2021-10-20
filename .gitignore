@@ -7,7 +7,7 @@ db.sqlite3
 .env
 .VENV
 venv/
-
+venv
 
 # TESTING #
 .pytest_cache/
