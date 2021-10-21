@@ -16,7 +16,6 @@ class TagsSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 class PostSerializer(serializers.ModelSerializer):
-    # id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Post
