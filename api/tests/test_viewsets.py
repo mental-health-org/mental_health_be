@@ -1,6 +1,7 @@
 from django.test import TestCase
 from api.models import User, Post, Tag
 from django.urls import reverse
+from django.test.client import RequestFactory
 import json
 
 class TestQuestionsViewSets(TestCase):
@@ -14,11 +15,16 @@ class TestQuestionsViewSets(TestCase):
         self.post2 = Post.objects.create( user = self.user, title = 'Second Title',
             body = 'dolor sit amet'
         )
+        self.questions_request = RequestFactory().post('/submit/',{'title': 'Third Title',
+            'body': 'some thoughtful question',
+            'tags': ['depression', 'anxiety']
+        })
 
         # Get URL's
         self.list_url = reverse('questions-list')
         self.detail_url = reverse('questions-detail', args={self.post2.id})
         self.detail_url_404 = reverse('questions-detail', args={0})
+        # self.create_url = ('questions-list', self.questions_request)
 
     def test_questions_list(self):
         response = self.client.get(self.list_url)
@@ -35,12 +41,24 @@ class TestQuestionsViewSets(TestCase):
         response = self.client.get(self.detail_url_404)
         self.assertEqual(response.status_code, 404)
 
+    def test_tags_create(self):
+        self.tag = Tag.objects.create(name='Anxiety')
+        self.assertEqual(1, len(Tag.objects.all()))
+
+        response = self.client.post("/api/v1/questions/",{"title": "Third Title",
+            "body": "some thoughtful question",
+            "tags": ["Depression", "Anxiety"]})
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(2, len(Tag.objects.all()))
+
+
 class TestTagsViewSets(TestCase):
 
     def setUp(self):
         # Create Objects
         self.tag = Tag.objects.create(name = 'addiction')
         self.tag2 = Tag.objects.create(name = 'child therapy')
+        self.new_tags = ['therapy', 'anxiety']
 
         # Get URL's
         self.list_url = reverse('tags-list')
