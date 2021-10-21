@@ -22,11 +22,7 @@ class TestPostCase(TestCase):
         )
 
     def test_string_representation_of_post(self):
-        expect_representation_post = 'belongs to: {} title: {} body: {}'.format(
-            self.post.user.username,
-            self.post.title,
-            self.post.body
-        )
+        expect_representation_post = '{}'.format(self.post.title)
         self.assertEqual(expect_representation_post, str(self.post))
         self.assertEqual(0, self.post.upvote)
         self.assertEqual(0, self.post.downvote)
