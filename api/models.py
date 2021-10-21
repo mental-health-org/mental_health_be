@@ -38,9 +38,9 @@ class Post(models.Model):
         return 'belongs to: ' + self.user.username + ' title: ' + self.title + ' body: ' + self.body
 
 class Response(models.Model):
-    body = models.TextField
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    body = models.TextField(max_length=5000)
     vote_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
