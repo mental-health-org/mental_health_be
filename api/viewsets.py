@@ -2,6 +2,7 @@ from .models import User, Post, Tag
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .serializers import QuestionsSerializer, TagsSerializer, PostSerializer
+from .serializers import basic_serializer
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
@@ -37,8 +38,8 @@ class QuestionsViewSet(viewsets.ViewSet):
                 new_post.tagging.add(existing_tag.id)
 
         response =  {
-                    'id': None, 'type': 'questions', 'attributes:':
-                    {'question:': post_serializer.data, 'tags': tags_data}
+                    'id': None, 'type': 'questions', 'attributes':
+                    {'question': post_serializer.data, 'tags': tags_data}
         }
 
         return Response(response, status=status.HTTP_201_CREATED)
