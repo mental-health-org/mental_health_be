@@ -41,7 +41,7 @@ class TestQuestionsViewSets(TestCase):
         response = self.client.get(self.detail_url_404)
         self.assertEqual(response.status_code, 404)
 
-    def test_tags_create(self):
+    def test_questions_create(self):
         self.tag = Tag.objects.create(name='Anxiety')
         self.assertEqual(1, len(Tag.objects.all()))
 
@@ -50,6 +50,13 @@ class TestQuestionsViewSets(TestCase):
             "tags": ["Depression", "Anxiety"]})
         self.assertEqual(response.status_code, 201)
         self.assertEqual(2, len(Tag.objects.all()))
+
+    def test_questions_create_400(self):
+
+        response = self.client.post("/api/v1/questions/",{"invalid": "nothing",
+            "bad input": 2,
+            "tags": ["Depression", "Anxiety"]})
+        self.assertEqual(response.status_code, 400)
 
 
 class TestTagsViewSets(TestCase):
