@@ -36,8 +36,12 @@ class QuestionsViewSet(viewsets.ViewSet):
                 existing_tag = Tag.objects.filter(name=tag).last()
                 new_post.tagging.add(existing_tag.id)
 
-        return Response(post_serializer.data, status=status.HTTP_201_CREATED)
+        response =  {
+                    'id': None, 'type': 'questions', 'attributes:':
+                    {'question:': post_serializer.data, 'tags': tags_data}
+        }
 
+        return Response(response, status=status.HTTP_201_CREATED)
 
 class TagsViewSet(viewsets.ViewSet):
 
