@@ -51,3 +51,11 @@ class TagsViewSet(viewsets.ViewSet):
         tag = get_object_or_404(queryset, pk=pk)
         serializer = TagsSerializer(tag)
         return Response(serializer.data)
+
+class PostsViewSet(viewsets.ViewSet):
+
+    def retrieve(self, request, pk=None):
+        queryset = Post.objects.all()
+        post = get_object_or_404(queryset, pk=pk)
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
