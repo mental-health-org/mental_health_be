@@ -1,7 +1,7 @@
 from .models import User, Post, Tag
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from .serializers import QuestionsSerializer, TagsSerializer, PostSerializer
+from .serializers import QuestionsSerializer, TagsSerializer, PostSerializer, UserSerializer
 from .serializers import basic_serializer
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -79,4 +79,12 @@ class PostsViewSet(viewsets.ViewSet):
         queryset = Post.objects.all()
         post = get_object_or_404(queryset, pk=pk)
         serializer = PostSerializer(post)
+        return Response(serializer.data)
+
+class UsersViewSet(viewsets.ViewSet):
+
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(user)
         return Response(serializer.data)
