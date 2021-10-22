@@ -58,6 +58,11 @@ class TestQuestionsViewSets(TestCase):
             "tags": ["Depression", "Anxiety"]})
         self.assertEqual(response.status_code, 400)
 
+    def test_questions_delete(self):
+        response = self.client.delete("/api/v1/questions/"+str(self.post2.id)+"/", content_type='application/json')
+
+
+        self.assertEqual(response.status_code, 204)
 
 class TestTagsViewSets(TestCase):
 
@@ -104,7 +109,3 @@ class TestPostsViewSets(TestCase):
         self.assertEqual(response.data['id'], self.post2.id)
         self.assertEqual(response.data['title'], self.post2.title)
         self.assertNotEqual(response.data['body'], self.post.body)
-
-    def test_post_detail_404(self):
-        response = self.client.get(self.detail_url_404)
-        self.assertEqual(response.status_code, 404)
