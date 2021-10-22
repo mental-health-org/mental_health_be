@@ -22,5 +22,11 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'user', 'title', 'body', 'upvote', 'downvote', 'created_at', 'updated_at')
 
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ("__all__")
+
 def basic_serializer(objects):
     return core_serializers.serialize('json', [objects])
