@@ -19,6 +19,14 @@ class QuestionsViewSet(viewsets.ViewSet):
         serializer = QuestionsSerializer(question)
         return Response(serializer.data)
 
+    def destroy(self, request, *args, **kwargs):
+        instance = Post.objects.filter(id=self.kwargs['pk'])
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
     def create(self, request):
         tags_data = request.data.copy().pop('tags')
         post_data = request.data.copy()
