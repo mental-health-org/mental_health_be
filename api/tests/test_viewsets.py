@@ -143,3 +143,8 @@ class TestPostsViewSets(TestCase):
         response = self.client.post("/api/v1/users/",{"username": "Good User"})
         self.assertEqual(response.status_code, 201)
         self.assertEqual(2, len(User.objects.all()))
+
+    def test_users_create_400(self):
+
+        response = self.client.post("/api/v1/users/",{"invalid": 2})
+        self.assertEqual(response.status_code, 400)
