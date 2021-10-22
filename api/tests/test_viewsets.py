@@ -118,3 +118,17 @@ class TestPostsViewSets(TestCase):
     def test_post_detail_404(self):
         response = self.client.get(self.detail_url_404)
         self.assertEqual(response.status_code, 404)
+
+class TestPostsViewSets(TestCase):
+    def setUp(self):
+        # Create Objects
+        self.user = User.objects.create(username = 'Billy')
+
+        # Get URL's
+        self.detail_url = reverse("users-detail", args={self.user.id})
+        self.detail_url_404 = reverse('users-detail', args={0})
+
+    def test_users_detail(self):
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['username'], self.user.username)
