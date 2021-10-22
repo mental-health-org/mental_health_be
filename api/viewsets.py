@@ -27,6 +27,14 @@ class QuestionsViewSet(viewsets.ViewSet):
     def perform_destroy(self, instance):
         instance.delete()
 
+    def partial_update(self, request, pk=None):
+        queryset = Post.objects.all()
+        question = get_object_or_404(queryset, pk=pk)
+        serializer = QuestionsSerializer(question, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def create(self, request):
         tags_data = request.data.copy().pop('tags')
         post_data = request.data.copy()
