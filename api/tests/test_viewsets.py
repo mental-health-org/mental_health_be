@@ -132,3 +132,7 @@ class TestPostsViewSets(TestCase):
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['username'], self.user.username)
+
+    def test_users_detail_404(self):
+        response = self.client.get(self.detail_url_404)
+        self.assertEqual(response.status_code, 404)
