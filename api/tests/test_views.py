@@ -29,3 +29,7 @@ class TestSearchFunctions(TestCase):
         response = self.client.get(self.question_url+"?search=Does+Not+Exist")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, [])
+
+    def test_question_search_400(self):
+        response = self.client.get(self.question_url+"?nothing=Does+Not+Exist")
+        self.assertEqual(response.status_code, 400)
