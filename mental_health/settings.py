@@ -31,16 +31,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'django_extensions',
-    'mental_health',
-    'rest_framework',
-    'corsheaders',
-=======
     'mental_health', #don't know why this is necessary
     'rest_framework',
+    'corsheaders',
     'api',
->>>>>>> cbcf88f (Update post responses with get user/post and clean up code; 201 status)
 ]
 
 MIDDLEWARE = [

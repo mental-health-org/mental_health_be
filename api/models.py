@@ -31,10 +31,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
     def __str__(self):
-<<<<<<< HEAD
         return self.title
-=======
-        return 'belongs to: ' + self.user.username + ' title: ' + self.title + ' body: ' + self.body
 
 class Response(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -43,4 +40,3 @@ class Response(models.Model):
     vote_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
->>>>>>> 082e2b3 (Create response model)
