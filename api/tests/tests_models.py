@@ -1,5 +1,5 @@
-from api.models import User, Post, Tag
 from django.test import TestCase
+from api.models import User, Post, Tag, Response
 
 class TestUserCase(TestCase):
 
@@ -52,3 +52,11 @@ class TestTaggingCase(TestCase):
     def test_tagging(self):
         self.assertEqual(1, self.post.tagging.all().count())
         self.assertEqual(self.tag, self.post.tagging.first())
+
+class ResponseTestCase(TestCase):
+    def setUp(self):
+        Response.objects.create(
+            body='this is an answer.',
+            user=1
+            post=1
+            )
