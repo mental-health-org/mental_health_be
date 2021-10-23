@@ -24,10 +24,10 @@ class Tag(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, default=None, on_delete=models.SET_NULL)
     title = models.CharField(max_length = 50)
-    body = models.CharField(max_length = 1000)
+    body = models.CharField(max_length = 1000, null=True, blank=True, default=None)
     upvote = models.IntegerField(default = 0)
     downvote = models.IntegerField(default = 0)
-    tagging = models.ManyToManyField(Tag)
+    tagging = models.ManyToManyField(Tag, related_name='taggings', blank=True)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 

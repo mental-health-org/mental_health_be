@@ -1,8 +1,8 @@
 from .models import User, Post, Tag
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from .serializers import QuestionsSerializer, TagsSerializer, PostSerializer
-from .serializers import basic_serializer
+from .serializers import *
+from rest_framework.decorators import action
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
@@ -19,14 +19,30 @@ class QuestionsViewSet(viewsets.ViewSet):
         serializer = QuestionsSerializer(question)
         return Response(serializer.data)
 
+    def destroy(self, request, *args, **kwargs):
+        instance = Post.objects.filter(id=self.kwargs['pk'])
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+    def partial_update(self, request, pk=None):
+        queryset = Post.objects.all()
+        question = get_object_or_404(queryset, pk=pk)
+        serializer = QuestionsSerializer(question, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def create(self, request):
         tags_data = request.data.copy().pop('tags')
         post_data = request.data.copy()
         del post_data['tags']
 
-        post_serializer = PostSerializer(data=post_data)
-        post_serializer.is_valid(raise_exception=True)
-        post_serializer.save()
+        serializer = PostSerializer(data=post_data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         new_post = Post.objects.filter(title=post_data['title']).last()
 
         for tag in tags_data:
@@ -37,10 +53,7 @@ class QuestionsViewSet(viewsets.ViewSet):
                 existing_tag = Tag.objects.filter(name=tag).last()
                 new_post.tagging.add(existing_tag.id)
 
-        response =  {
-                    'id': None, 'type': 'questions', 'attributes':
-                    {'question': post_serializer.data, 'tags': tags_data}
-        }
+        response =  header_serializer('questions', {'question': serializer.data, 'tags': tags_data})
 
         return Response(response, status=status.HTTP_201_CREATED)
 
@@ -48,8 +61,8 @@ class TagsViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = Tag.objects.all()
-        serializer = TagsSerializer(queryset, many=True)
-        return Response(serializer.data)
+        serializer = tags_serializer(queryset)
+        return Response(serializer)
 
     def retrieve(self, request, pk=None):
         queryset = Tag.objects.all()
@@ -64,3 +77,18 @@ class PostsViewSet(viewsets.ViewSet):
         post = get_object_or_404(queryset, pk=pk)
         serializer = PostSerializer(post)
         return Response(serializer.data)
+
+class UsersViewSet(viewsets.ViewSet):
+
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
