@@ -34,6 +34,12 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("__all__")
 
+def tags_serializer(queryset):
+    all_tags = []
+    for tag in queryset:
+        all_tags.append(tag.name)
+    return {"id": None, "type": "tags", "attributes" : all_tags}
+
 def basic_serializer(objects):
     return core_serializers.serialize('json', [objects])
 
