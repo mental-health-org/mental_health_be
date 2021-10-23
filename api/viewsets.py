@@ -40,9 +40,9 @@ class QuestionsViewSet(viewsets.ViewSet):
         post_data = request.data.copy()
         del post_data['tags']
 
-        post_serializer = PostSerializer(data=post_data)
-        post_serializer.is_valid(raise_exception=True)
-        post_serializer.save()
+        serializer = PostSerializer(data=post_data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         new_post = Post.objects.filter(title=post_data['title']).last()
 
         for tag in tags_data:
@@ -53,10 +53,7 @@ class QuestionsViewSet(viewsets.ViewSet):
                 existing_tag = Tag.objects.filter(name=tag).last()
                 new_post.tagging.add(existing_tag.id)
 
-        response =  {
-                    'id': None, 'type': 'questions', 'attributes':
-                    {'question': post_serializer.data, 'tags': tags_data}
-        }
+        response =  header_serializer('questions', {'question': serializer.data, 'tags': tags_data})
 
         return Response(response, status=status.HTTP_201_CREATED)
 
