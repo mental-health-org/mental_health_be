@@ -39,3 +39,7 @@ class TestSearchFunctions(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["id"], self.post2.id)
+
+    def test_question_filter_404(self):
+        response = self.client.get(self.filter_url+"?tags=Does+Not+Exist")
+        self.assertEqual(response.status_code, 404)
