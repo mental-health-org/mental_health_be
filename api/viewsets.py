@@ -1,8 +1,8 @@
 from .models import User, Post, Tag
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from .serializers import QuestionsSerializer, TagsSerializer, PostSerializer, UserSerializer
-from .serializers import basic_serializer
+from .serializers import *
+from rest_framework.decorators import action
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
@@ -64,8 +64,8 @@ class TagsViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = Tag.objects.all()
-        serializer = TagsSerializer(queryset, many=True)
-        return Response(serializer.data)
+        serializer = tags_serializer(queryset)
+        return Response(serializer)
 
     def retrieve(self, request, pk=None):
         queryset = Tag.objects.all()
