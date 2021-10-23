@@ -18,3 +18,14 @@ def question_search(request):
     title_results = Post.objects.filter(title__icontains=search)
     serializer = QuestionsSerializer(title_results, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(('GET',))
+def question_tags_search(request):
+    tags = request.GET.get('tags')
+
+    if Tag.objects.filter(name=tags).first() == None:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    results = Post.objects.filter(tagging__name=tags)
+    serializer = QuestionsSerializer(results, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
