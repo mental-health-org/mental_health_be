@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+<<<<<<< HEAD
 from django.http import HttpResponse
 <<<<<<< HEAD
 from .serializers import *
@@ -33,17 +34,20 @@ def question_tags_search(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 =======
 from .models import User, Post, Tag, Response
+=======
+from django.http import JsonResponse
+from django.utils.decorators import method_decorator #tells django POST method does not need a CSRF token
+from django.views.decorators.csrf import csrf_exempt #tells django POST method does not need a CSRF token
+>>>>>>> cbcf88f (Update post responses with get user/post and clean up code; 201 status)
 import json
-
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
+from .models import User, Post, Tag, Response
 
 # Create your views here.
+# def questions_list(request):, can we delete this?
 
-# def questions_list(request):
-
-@method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch') #tells django POST method does not need a CSRF token
 class MentalHealth(View):
+
     def post(self, request):
         data = json.loads(request.body.decode("utf-8"))
         r_body = data.get('body')
@@ -52,8 +56,8 @@ class MentalHealth(View):
 
         response_data = {
             'body': r_body,
-            'user': r_user,
-            'post': r_post,
+            'user': User.objects.get(id=r_user),
+            'post': Post.objects.get(id=r_post),
         }
 
         response = Response.objects.create(**response_data)
