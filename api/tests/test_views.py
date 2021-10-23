@@ -43,3 +43,7 @@ class TestSearchFunctions(TestCase):
     def test_question_filter_404(self):
         response = self.client.get(self.filter_url+"?tags=Does+Not+Exist")
         self.assertEqual(response.status_code, 404)
+
+    def test_question_filter_400(self):
+        response = self.client.get(self.question_url+"?nothing=Does+Not+Exist")
+        self.assertEqual(response.status_code, 400)
