@@ -36,3 +36,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 def basic_serializer(objects):
     return core_serializers.serialize('json', [objects])
+
+def header_serializer(type, attributes):
+    return { 'id': None, 'type': type, 'attributes': attributes }
