@@ -19,3 +19,8 @@ class TestSearchFunctions(TestCase):
         self.question_url = reverse('search_questions')
         self.filter_url = reverse('filter_questions')
 
+    def test_question_search(self):
+        response = self.client.get(self.question_url+"?search=tle")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["id"], self.post.id)
