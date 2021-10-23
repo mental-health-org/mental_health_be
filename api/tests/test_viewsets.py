@@ -1,5 +1,5 @@
 from django.test import TestCase
-from api.models import User, Post, Tag
+from api.models import *
 from django.urls import reverse
 from django.test.client import RequestFactory
 import json
@@ -85,7 +85,7 @@ class TestTagsViewSets(TestCase):
     def test_tags_list(self):
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data["attributes"]), 2)
 
     def test_tags_detail(self):
         response = self.client.get(self.detail_url)
