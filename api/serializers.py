@@ -1,10 +1,16 @@
 from django.core import serializers as core_serializers
 from rest_framework import serializers
-from .models import User, Post, Tag
+from .models import *
 
 
 class QuestionsSerializer(serializers.ModelSerializer):
-    # id = serializers.IntegerField(read_only=True)
+    tagging = serializers.SerializerMethodField()
+
+    def get_tagging(self, obj):
+        tag_names = []
+        for tag in obj.tagging.all():
+            tag_names.append(tag.name)
+        return tag_names
 
     class Meta:
         model = Post
