@@ -24,3 +24,8 @@ class TestSearchFunctions(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["id"], self.post.id)
+
+    def test_question_search_returns_empty(self):
+        response = self.client.get(self.question_url+"?search=Does+Not+Exist")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, [])
