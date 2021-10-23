@@ -24,17 +24,23 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'api.apps.ApiConfig',
+    # 'api.apps.ApiConfig', seems like 'api' below is simpler version of this
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'django_extensions',
     'mental_health',
     'rest_framework',
     'corsheaders',
+=======
+    'mental_health', #don't know why this is necessary
+    'rest_framework',
+    'api',
+>>>>>>> cbcf88f (Update post responses with get user/post and clean up code; 201 status)
 ]
 
 MIDDLEWARE = [
@@ -114,8 +120,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'mental_health',
-        'USER': 'ajking',
-        'PASSWORD': '1234',
+        'USER': 'antonioking',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '',
     }
