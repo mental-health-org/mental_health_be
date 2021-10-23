@@ -53,10 +53,10 @@ class TestTaggingCase(TestCase):
         self.assertEqual(1, self.post.tagging.all().count())
         self.assertEqual(self.tag, self.post.tagging.first())
 
-class ResponseTestCase(TestCase):
-    def setUp(self):
-        Response.objects.create(
-            body='this is an answer.',
-            user=1
-            post=1
-            )
+# class ResponseTestCase(TestCase):
+#     def setUp(self):
+#         Response.objects.create(
+#             body='this is an answer.',
+#             user=1
+#             post=1
+#             )
