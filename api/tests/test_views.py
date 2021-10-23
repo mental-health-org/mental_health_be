@@ -33,3 +33,9 @@ class TestSearchFunctions(TestCase):
     def test_question_search_400(self):
         response = self.client.get(self.question_url+"?nothing=Does+Not+Exist")
         self.assertEqual(response.status_code, 400)
+
+    def test_question_filter(self):
+        response = self.client.get(self.filter_url+"?tags=Depression")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["id"], self.post2.id)
