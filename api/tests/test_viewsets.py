@@ -177,3 +177,10 @@ class TestResponsesViewSets(TestCase):
         response = self.client.get(self.detail_url_404)
         self.assertEqual(response.status_code, 404)
 
+    def test_response_create(self):
+        self.assertEqual(3, len(Response.objects.all()))
+
+        response = self.client.post("/api/v1/responses/",{ "user" : "", "post": str(self.post.id),"body": "Good Response" })
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(4, len(Response.objects.all()))
+        self.assertEqual("Good Response", self.post.response_set.last().body)
