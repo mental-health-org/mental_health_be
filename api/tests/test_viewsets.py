@@ -168,3 +168,7 @@ class TestResponsesViewSets(TestCase):
         self.detail_url = reverse("responses-detail", args={self.response.id})
         self.detail_url_404 = reverse('responses-detail', args={0})
 
+    def test_response_detail(self):
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['body'], self.response.body)
