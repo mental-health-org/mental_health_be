@@ -30,3 +30,8 @@ class TestResponseSerializer(TestCase):
         self.response = Response.objects.create(**self.response_attributes)
         self.serializer = ResponseSerializer(instance=self.response)
 
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+
+        self.assertEqual(set(data.keys()), set(["id", "user", "post", "body"]))
+
