@@ -121,3 +121,10 @@ class ResponsesViewSet(viewsets.ViewSet):
         serializer = ResponseSerializer(response)
         return FinalResponse(serializer.data)
 
+    def create(self, request):
+        serializer = ResponseSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return FinalResponse(serializer.data, status=status.HTTP_201_CREATED)
+
