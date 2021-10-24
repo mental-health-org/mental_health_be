@@ -20,3 +20,13 @@ class TestTagsSerializer(TestCase):
 
         self.assertEqual(data['name'], self.tag_attributes['name'])
 
+class TestResponseSerializer(TestCase):
+
+    def setUp(self):
+
+        self.post = Post.objects.create(title = 'Test Title', body = 'ipsum lorem')
+        self.response_attributes = { "post": self.post, "body": "Some Body"}
+
+        self.response = Response.objects.create(**self.response_attributes)
+        self.serializer = ResponseSerializer(instance=self.response)
+
