@@ -184,3 +184,8 @@ class TestResponsesViewSets(TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(4, len(Response.objects.all()))
         self.assertEqual("Good Response", self.post.response_set.last().body)
+
+    def test_response_create_400(self):
+
+        response = self.client.post("/api/v1/responses/",{"invalid": 2})
+        self.assertEqual(response.status_code, 400)
