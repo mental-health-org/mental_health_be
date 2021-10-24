@@ -1,28 +1,28 @@
-from .models import User, Post, Tag
+from .models import *
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .serializers import *
 from rest_framework.decorators import action
 from rest_framework import viewsets, status
-from rest_framework.response import Response
+from rest_framework.response import Response as FinalResponse
 
 class QuestionsViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = Post.objects.all()
         serializer = QuestionsSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return FinalResponse(serializer.data)
 
     def retrieve(self, request, pk=None):
         queryset = Post.objects.all()
         question = get_object_or_404(queryset, pk=pk)
-        serializer = QuestionsSerializer(question)
-        return Response(serializer.data)
+        serializer = SingleQuestionSerializer(question)
+        return FinalResponse(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
         instance = Post.objects.filter(id=self.kwargs['pk'])
         self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return FinalResponse(status=status.HTTP_204_NO_CONTENT)
 
     def perform_destroy(self, instance):
         instance.delete()
@@ -33,7 +33,7 @@ class QuestionsViewSet(viewsets.ViewSet):
         serializer = QuestionsSerializer(question, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return FinalResponse(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
         tags_data = request.data.copy().pop('tags')
