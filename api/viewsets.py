@@ -97,3 +97,10 @@ class UsersViewSet(viewsets.ViewSet):
 
         return FinalResponse(serializer.data, status=status.HTTP_201_CREATED)
 
+    def partial_update(self, request, pk=None):
+        queryset = User.objects.all()
+        response = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(response, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return FinalResponse(serializer.data, status=status.HTTP_200_OK)
