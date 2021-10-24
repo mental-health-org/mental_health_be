@@ -15,3 +15,8 @@ class TestTagsSerializer(TestCase):
 
         self.assertEqual(set(data.keys()), set(["id", "name"]))
 
+    def test_name_field(self):
+        data = self.serializer.data
+
+        self.assertEqual(data['name'], self.tag_attributes['name'])
+
