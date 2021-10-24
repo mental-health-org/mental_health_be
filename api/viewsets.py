@@ -128,3 +128,11 @@ class ResponsesViewSet(viewsets.ViewSet):
 
         return FinalResponse(serializer.data, status=status.HTTP_201_CREATED)
 
+    def partial_update(self, request, pk=None):
+        queryset = Response.objects.all()
+        response = get_object_or_404(queryset, pk=pk)
+        serializer = ResponseSerializer(response, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return FinalResponse(serializer.data, status=status.HTTP_200_OK)
+
