@@ -172,3 +172,8 @@ class TestResponsesViewSets(TestCase):
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['body'], self.response.body)
+
+    def test_response_detail_404(self):
+        response = self.client.get(self.detail_url_404)
+        self.assertEqual(response.status_code, 404)
+
