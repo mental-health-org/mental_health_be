@@ -155,3 +155,16 @@ class TestUsersViewSets(TestCase):
         self.assertEqual(response.status_code, 204)
         self.assertEqual(User.objects.all().count(), 0)
 
+class TestResponsesViewSets(TestCase):
+    def setUp(self):
+        # Create Objects
+        self.user = User.objects.create(username = 'Billy')
+        self.post = Post.objects.create(title = 'Test Title', body = 'ipsum lorem')
+        self.response = Response.objects.create(post_id = str(self.post.id), body = 'thing 1')
+        self.response2 = Response.objects.create(post_id = str(self.post.id), body = 'thing 2 say')
+        self.response3 = Response.objects.create(post_id = str(self.post.id), body = 'thing 3')
+
+        # Get URL's
+        self.detail_url = reverse("responses-detail", args={self.response.id})
+        self.detail_url_404 = reverse('responses-detail', args={0})
+
