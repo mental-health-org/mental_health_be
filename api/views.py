@@ -5,34 +5,33 @@ from .serializers import *
 from .models import *
 from rest_framework import filters, generics, status
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework.response import Response as FinalResponse
 from django.utils.decorators import method_decorator #tells django POST method does not need a CSRF token
 from django.views.decorators.csrf import csrf_exempt #tells django POST method does not need a CSRF token
 import json
 
 
-# Create your views here.
 @api_view(('GET',))
 def question_search(request):
 
     if request.GET.get('search') == None:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return FinalResponse(status=status.HTTP_400_BAD_REQUEST)
 
     search = request.GET.get('search')
     title_results = Post.objects.filter(title__icontains=search)
     serializer = QuestionsSerializer(title_results, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    return FinalResponse(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(('GET',))
 def question_tags_search(request):
     tags = request.GET.get('tags')
 
     if Tag.objects.filter(name=tags).first() == None:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return FinalResponse(status=status.HTTP_404_NOT_FOUND)
 
     results = Post.objects.filter(tagging__name=tags)
     serializer = QuestionsSerializer(results, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    return FinalResponse(serializer.data, status=status.HTTP_200_OK)
 
 @method_decorator(csrf_exempt, name='dispatch') #tells django POST method does not need a CSRF token
 class MentalHealth(View):
