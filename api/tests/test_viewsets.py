@@ -195,3 +195,8 @@ class TestResponsesViewSets(TestCase):
         response = self.client.patch("/api/v1/responses/"+str(self.response3.id)+"/", data={"body": "patch"}, content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(Response.objects.last().body, old_body)
+
+    def test_response_delete(self):
+        response = self.client.delete("/api/v1/responses/"+str(self.response.id)+"/", content_type='application/json')
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(Response.objects.all().count(), 2)
