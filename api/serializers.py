@@ -42,11 +42,17 @@ class TagsSerializer(serializers.ModelSerializer):
         model = Tag
         fields = ('id', 'name')
 
+class ResponseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Response
+        fields = ('id', 'user', 'post', 'body')
+
 class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'user', 'title', 'body', 'upvote', 'downvote', 'created_at', 'updated_at')
+        fields = ('__all__')
 
 class UserSerializer(serializers.ModelSerializer):
 
