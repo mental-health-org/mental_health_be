@@ -189,3 +189,9 @@ class TestResponsesViewSets(TestCase):
 
         response = self.client.post("/api/v1/responses/",{"invalid": 2})
         self.assertEqual(response.status_code, 400)
+
+    def test_response_patch(self):
+        old_body = Response.objects.last().body
+        response = self.client.patch("/api/v1/responses/"+str(self.response3.id)+"/", data={"body": "patch"}, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(Response.objects.last().body, old_body)
