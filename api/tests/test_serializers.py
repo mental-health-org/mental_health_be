@@ -40,3 +40,7 @@ class TestResponseSerializer(TestCase):
 
         self.assertEqual(data['body'], self.response_attributes['body'])
 
+    def test_post_field(self):
+        data = self.serializer.data
+
+        self.assertEqual(data['post'], self.post.id)
