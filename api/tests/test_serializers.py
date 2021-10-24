@@ -35,3 +35,8 @@ class TestResponseSerializer(TestCase):
 
         self.assertEqual(set(data.keys()), set(["id", "user", "post", "body"]))
 
+    def test_body_field(self):
+        data = self.serializer.data
+
+        self.assertEqual(data['body'], self.response_attributes['body'])
+
