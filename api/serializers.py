@@ -16,6 +16,26 @@ class QuestionsSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'title', 'body', 'upvote', 'downvote', 'tagging', 'created_at', 'updated_at')
 
+class SingleQuestionSerializer(serializers.ModelSerializer):
+    tagging = serializers.SerializerMethodField()
+    responses = serializers.SerializerMethodField()
+
+    def get_tagging(self, obj):
+        tag_names = []
+        for tag in obj.tagging.all():
+            tag_names.append(tag.name)
+        return tag_names
+
+    def get_responses(self, obj):
+        responses = []
+        for response in obj.response_set.all():
+            responses.append(response.body)
+        return responses
+
+    class Meta:
+        model = Post
+        fields = ('id', 'title', 'body', 'upvote', 'downvote', 'tagging', 'responses' ,'created_at', 'updated_at')
+
 class TagsSerializer(serializers.ModelSerializer):
 
     class Meta:
