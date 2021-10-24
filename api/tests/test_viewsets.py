@@ -61,6 +61,7 @@ class TestQuestionsViewSets(TestCase):
     def test_questions_delete(self):
         response = self.client.delete("/api/v1/questions/"+str(self.post2.id)+"/", content_type='application/json')
         self.assertEqual(response.status_code, 204)
+        self.assertEqual(Post.objects.all().count(), 1)
 
     def test_questions_patch(self):
         old_title = Post.objects.last().title
@@ -119,7 +120,7 @@ class TestPostsViewSets(TestCase):
         response = self.client.get(self.detail_url_404)
         self.assertEqual(response.status_code, 404)
 
-class TestPostsViewSets(TestCase):
+class TestUsersViewSets(TestCase):
     def setUp(self):
         # Create Objects
         self.user = User.objects.create(username = 'Billy')
@@ -148,3 +149,9 @@ class TestPostsViewSets(TestCase):
 
         response = self.client.post("/api/v1/users/",{"invalid": 2})
         self.assertEqual(response.status_code, 400)
+
+    def test_delete_user(self):
+        response = self.client.delete("/api/v1/users/"+str(self.user.id)+"/", content_type='application/json')
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(User.objects.all().count(), 0)
+
