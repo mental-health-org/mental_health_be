@@ -45,7 +45,11 @@ class QuestionsViewSet(viewsets.ViewSet):
         serializer.save()
         new_post = Post.objects.filter(title=post_data['title']).last()
 
+        formatted_tags = []
         for tag in tags_data:
+            formatted_tags.append(tag.strip().lower().title())
+
+        for tag in formatted_tags:
             if not Tag.objects.filter(name=tag):
                 new_tag = Tag.objects.create(name=tag)
                 new_post.tagging.add(new_tag.id)
@@ -53,22 +57,22 @@ class QuestionsViewSet(viewsets.ViewSet):
                 existing_tag = Tag.objects.filter(name=tag).last()
                 new_post.tagging.add(existing_tag.id)
 
-        response =  header_serializer('questions', {'question': serializer.data, 'tags': tags_data})
+        response =  header_serializer('questions', {'question': serializer.data, 'tags': formatted_tags})
 
-        return Response(response, status=status.HTTP_201_CREATED)
+        return FinalResponse(response, status=status.HTTP_201_CREATED)
 
 class TagsViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = Tag.objects.all()
         serializer = tags_serializer(queryset)
-        return Response(serializer)
+        return FinalResponse(serializer)
 
     def retrieve(self, request, pk=None):
         queryset = Tag.objects.all()
         tag = get_object_or_404(queryset, pk=pk)
         serializer = TagsSerializer(tag)
-        return Response(serializer.data)
+        return FinalResponse(serializer.data)
 
 class PostsViewSet(viewsets.ViewSet):
 
@@ -76,7 +80,7 @@ class PostsViewSet(viewsets.ViewSet):
         queryset = Post.objects.all()
         post = get_object_or_404(queryset, pk=pk)
         serializer = PostSerializer(post)
-        return Response(serializer.data)
+        return FinalResponse(serializer.data)
 
 class UsersViewSet(viewsets.ViewSet):
 
@@ -84,11 +88,12 @@ class UsersViewSet(viewsets.ViewSet):
         queryset = User.objects.all()
         user = get_object_or_404(queryset, pk=pk)
         serializer = UserSerializer(user)
-        return Response(serializer.data)
+        return FinalResponse(serializer.data)
 
     def create(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return FinalResponse(serializer.data, status=status.HTTP_201_CREATED)
+
