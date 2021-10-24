@@ -113,3 +113,11 @@ class UsersViewSet(viewsets.ViewSet):
     def perform_destroy(self, instance):
         instance.delete()
 
+class ResponsesViewSet(viewsets.ViewSet):
+
+    def retrieve(self, request, pk=None):
+        queryset = Response.objects.all()
+        response = get_object_or_404(queryset, pk=pk)
+        serializer = ResponseSerializer(response)
+        return FinalResponse(serializer.data)
+
