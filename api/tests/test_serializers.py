@@ -62,3 +62,8 @@ class TestPostSerializer(TestCase):
     def test_title_field(self):
         data = self.serializer.data
         self.assertEqual(data['title'], self.post.title)
+
+    def test_body_field(self):
+        data = self.serializer.data
+        self.assertEqual(data['body'], self.post.body)
+
