@@ -67,3 +67,7 @@ class TestPostSerializer(TestCase):
         data = self.serializer.data
         self.assertEqual(data['body'], self.post.body)
 
+    def test_upvote_field(self):
+        data = self.serializer.data
+        self.assertEqual(data['upvote'], self.post.upvote)
+
