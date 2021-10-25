@@ -74,3 +74,11 @@ class TestPostSerializer(TestCase):
     def test_downvote_field(self):
         data = self.serializer.data
         self.assertEqual(data['downvote'], self.post.downvote)
+
+    def test_tagging_field(self):
+        self.tag = Tag.objects.create(name = "Help")
+        self.post.tagging.add(self.tag)
+        self.serializer = PostSerializer(instance=self.post)
+
+        data = self.serializer.data
+        self.assertEqual(data['tagging'][0], self.post.tagging.first().id)
