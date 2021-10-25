@@ -74,14 +74,6 @@ class TagsViewSet(viewsets.ViewSet):
         serializer = TagsSerializer(tag)
         return FinalResponse(serializer.data)
 
-class PostsViewSet(viewsets.ViewSet):
-
-    def retrieve(self, request, pk=None):
-        queryset = Post.objects.all()
-        post = get_object_or_404(queryset, pk=pk)
-        serializer = PostSerializer(post)
-        return FinalResponse(serializer.data)
-
 class UsersViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
