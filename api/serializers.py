@@ -23,6 +23,7 @@ class QuestionsSerializer(serializers.ModelSerializer):
 class SingleQuestionSerializer(serializers.ModelSerializer):
     tagging = serializers.SerializerMethodField()
     responses = serializers.SerializerMethodField()
+    user = serializers.SerializerMethodField()
 
     def get_tagging(self, obj):
         tag_names = []
@@ -33,12 +34,28 @@ class SingleQuestionSerializer(serializers.ModelSerializer):
     def get_responses(self, obj):
         responses = []
         for response in obj.response_set.all():
-            responses.append(response.body)
+            response_data = {}
+            response_data['body'] = response.body
+            response_data['user'] = response.user
+            response_data['created_at'] = response.created_at
+            if response.user!=None:
+                response_data['user'] = {}
+                response_data['user']['username'] = response.user.username
+                response_data['user']['title'] = response.user.title
+            responses.append(response_data)
         return responses
+
+    def get_user(self, obj):
+        user_data = obj.user
+        if obj.user!=None:
+            user_data = {}
+            user_data["username"] = obj.user.username
+            user_data["title"] = obj.user.title
+        return user_data
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'body', 'upvote', 'downvote', 'tagging', 'responses' ,'created_at', 'updated_at')
+        fields = ('id', 'title', 'body', 'user', 'upvote', 'downvote', 'tagging', 'responses' ,'created_at', 'updated_at')
 
 class TagsSerializer(serializers.ModelSerializer):
 
