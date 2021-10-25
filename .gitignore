@@ -12,7 +12,7 @@ venv
 # TESTING #
 .pytest_cache/
 htmlcov/
-*.cover
+cover
 .coverage
 .coverage.*
 coverage.xml
