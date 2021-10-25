@@ -82,6 +82,7 @@ class TestPostSerializer(TestCase):
 
         data = self.serializer.data
         self.assertEqual(data['tagging'][0], self.post.tagging.first().id)
+
 class TestUserSerializer(TestCase):
 
     def setUp(self):
@@ -89,4 +90,9 @@ class TestUserSerializer(TestCase):
 
         self.user = User.objects.create(**self.user_attributes)
         self.serializer = UserSerializer(instance=self.user)
+
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+
+        self.assertEqual(set(data.keys()), set(["id", "username", "created_at", "updated_at"]))
 
