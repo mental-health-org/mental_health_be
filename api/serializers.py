@@ -5,6 +5,7 @@ from .models import *
 
 class QuestionsSerializer(serializers.ModelSerializer):
     tagging = serializers.SerializerMethodField()
+    response_count = serializers.SerializerMethodField()
 
     def get_tagging(self, obj):
         tag_names = []
@@ -12,9 +13,12 @@ class QuestionsSerializer(serializers.ModelSerializer):
             tag_names.append(tag.name)
         return tag_names
 
+    def get_response_count(self, obj):
+        return obj.response_set.all().count()
+
     class Meta:
         model = Post
-        fields = ('id', 'title', 'body', 'upvote', 'downvote', 'tagging', 'created_at', 'updated_at')
+        fields = ('id', 'title', 'body', 'response_count','upvote', 'downvote', 'tagging', 'created_at', 'updated_at')
 
 class SingleQuestionSerializer(serializers.ModelSerializer):
     tagging = serializers.SerializerMethodField()

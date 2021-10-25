@@ -44,3 +44,58 @@ class TestResponseSerializer(TestCase):
         data = self.serializer.data
 
         self.assertEqual(data['post'], self.post.id)
+
+class TestPostSerializer(TestCase):
+
+    def setUp(self):
+        self.post_attributes = { "title": "Test Title", "body": "ipsum lorem" }
+
+        self.post = Post.objects.create(**self.post_attributes)
+        self.serializer = PostSerializer(instance=self.post)
+
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+
+        self.assertEqual(set(data.keys()), set(["id", "user", "title", "body",
+        "upvote", "downvote", "tagging", "created_at", "updated_at"]))
+
+    def test_title_field(self):
+        data = self.serializer.data
+        self.assertEqual(data['title'], self.post.title)
+
+    def test_body_field(self):
+        data = self.serializer.data
+        self.assertEqual(data['body'], self.post.body)
+
+    def test_upvote_field(self):
+        data = self.serializer.data
+        self.assertEqual(data['upvote'], self.post.upvote)
+
+    def test_downvote_field(self):
+        data = self.serializer.data
+        self.assertEqual(data['downvote'], self.post.downvote)
+
+    def test_tagging_field(self):
+        self.tag = Tag.objects.create(name = "Help")
+        self.post.tagging.add(self.tag)
+        self.serializer = PostSerializer(instance=self.post)
+
+        data = self.serializer.data
+        self.assertEqual(data['tagging'][0], self.post.tagging.first().id)
+
+class TestUserSerializer(TestCase):
+
+    def setUp(self):
+        self.user_attributes = { "username": "New user" }
+
+        self.user = User.objects.create(**self.user_attributes)
+        self.serializer = UserSerializer(instance=self.user)
+
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+
+        self.assertEqual(set(data.keys()), set(["id", "username", "created_at", "updated_at"]))
+
+    def test_username(self):
+        data = self.serializer.data
+        self.assertEqual(data['username'], self.user.username)

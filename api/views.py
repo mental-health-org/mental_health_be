@@ -6,8 +6,6 @@ from .models import *
 from rest_framework import filters, generics, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response as FinalResponse
-from django.utils.decorators import method_decorator #tells django POST method does not need a CSRF token
-from django.views.decorators.csrf import csrf_exempt #tells django POST method does not need a CSRF token
 import json
 
 
@@ -32,25 +30,3 @@ def question_tags_search(request):
     results = Post.objects.filter(tagging__name=tags)
     serializer = QuestionsSerializer(results, many=True)
     return FinalResponse(serializer.data, status=status.HTTP_200_OK)
-
-@method_decorator(csrf_exempt, name='dispatch') #tells django POST method does not need a CSRF token
-class MentalHealth(View):
-
-    def post(self, request):
-        data = json.loads(request.body.decode("utf-8"))
-        r_body = data.get('body')
-        r_user = data.get('user')
-        r_post = data.get('post')
-
-        response_data = {
-            'body': r_body,
-            'user': User.objects.get(id=r_user),
-            'post': Post.objects.get(id=r_post),
-        }
-
-        response = Response.objects.create(**response_data)
-
-        data = {
-            "message": f"New item added to Response with id: {response.id}"
-        }
-        return JsonResponse(data, status=201)

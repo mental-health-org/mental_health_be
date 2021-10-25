@@ -74,14 +74,6 @@ class TagsViewSet(viewsets.ViewSet):
         serializer = TagsSerializer(tag)
         return FinalResponse(serializer.data)
 
-class PostsViewSet(viewsets.ViewSet):
-
-    def retrieve(self, request, pk=None):
-        queryset = Post.objects.all()
-        post = get_object_or_404(queryset, pk=pk)
-        serializer = PostSerializer(post)
-        return FinalResponse(serializer.data)
-
 class UsersViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
@@ -122,6 +114,11 @@ class ResponsesViewSet(viewsets.ViewSet):
         return FinalResponse(serializer.data)
 
     def create(self, request):
+        if request.POST.get('post') == None:
+            return FinalResponse("That question does not exist", status=status.HTTP_400_BAD_REQUEST)
+
+        queryset = Post.objects.all()
+        question = get_object_or_404(queryset, pk=request.data['post'])
         serializer = ResponseSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
