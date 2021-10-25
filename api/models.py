@@ -6,6 +6,7 @@ class User(models.Model):
     username = models.CharField(max_length = 30, unique=True, error_messages={
         'unique': 'Name is already taken'
     })
+    title = models.CharField(max_length = 30, null=True, blank=True, default=None)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
