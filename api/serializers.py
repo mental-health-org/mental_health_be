@@ -14,19 +14,11 @@ class QuestionsSerializer(serializers.ModelSerializer):
         return tag_names
 
     def get_response_count(self, obj):
-<<<<<<< HEAD
-        return obj.response_set.all().count()
-
-    class Meta:
-        model = Post
-        fields = ('id', 'title', 'body', 'response_count','upvote', 'downvote', 'tagging', 'created_at', 'updated_at')
-=======
         return obj.response_set.count()
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'body', 'upvote', 'downvote', 'tagging', 'response_count', 'created_at', 'updated_at')
->>>>>>> 6757a12 (Add response_count to questions endpoint)
+        fields = ('id', 'title', 'body', 'response_count', 'upvote', 'downvote', 'tagging', 'created_at', 'updated_at')
 
 class SingleQuestionSerializer(serializers.ModelSerializer):
     tagging = serializers.SerializerMethodField()
