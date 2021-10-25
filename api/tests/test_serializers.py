@@ -44,3 +44,12 @@ class TestResponseSerializer(TestCase):
         data = self.serializer.data
 
         self.assertEqual(data['post'], self.post.id)
+
+class TestPostSerializer(TestCase):
+
+    def setUp(self):
+        self.post_attributes = { "title": "Test Title", "body": "ipsum lorem" }
+
+        self.post = Post.objects.create(**self.post_attributes)
+        self.serializer = PostSerializer(instance=self.post)
+
