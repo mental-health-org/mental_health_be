@@ -168,6 +168,11 @@ class TestResponsesViewSets(TestCase):
         response = self.client.post("/api/v1/responses/",{"invalid": 2})
         self.assertEqual(response.status_code, 400)
 
+    def test_response_create_404(self):
+
+        response = self.client.post("/api/v1/responses/",{"post": "1000", "body": "that post id does not exist"})
+        self.assertEqual(response.status_code, 404)
+
     def test_response_patch(self):
         old_body = Response.objects.last().body
         response = self.client.patch("/api/v1/responses/"+str(self.response3.id)+"/", data={"body": "patch"}, content_type='application/json')
