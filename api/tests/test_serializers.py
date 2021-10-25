@@ -59,3 +59,6 @@ class TestPostSerializer(TestCase):
         self.assertEqual(set(data.keys()), set(["id", "user", "title", "body",
         "upvote", "downvote", "tagging", "created_at", "updated_at"]))
 
+    def test_title_field(self):
+        data = self.serializer.data
+        self.assertEqual(data['title'], self.post.title)
