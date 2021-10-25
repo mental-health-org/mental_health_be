@@ -114,6 +114,8 @@ class ResponsesViewSet(viewsets.ViewSet):
         return FinalResponse(serializer.data)
 
     def create(self, request):
+        queryset = Post.objects.all()
+        question = get_object_or_404(queryset, pk=request.data['post'])
         serializer = ResponseSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
