@@ -71,3 +71,6 @@ class TestPostSerializer(TestCase):
         data = self.serializer.data
         self.assertEqual(data['upvote'], self.post.upvote)
 
+    def test_downvote_field(self):
+        data = self.serializer.data
+        self.assertEqual(data['downvote'], self.post.downvote)
