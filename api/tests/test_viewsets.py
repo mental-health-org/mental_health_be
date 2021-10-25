@@ -98,28 +98,6 @@ class TestTagsViewSets(TestCase):
         response = self.client.get(self.detail_url_404)
         self.assertEqual(response.status_code, 404)
 
-class TestPostsViewSets(TestCase):
-
-    def setUp(self):
-        # Create Objects
-        self.post = Post.objects.create(title = 'Test Title', body = 'ipsum lorem')
-        self.post2 = Post.objects.create(title = 'Second Title',body = 'dolor sit amet')
-
-        # Get URL's
-        self.detail_url = reverse('posts-detail', args={self.post2.id})
-        self.detail_url_404 = reverse('posts-detail', args={0})
-
-    def test_post_detail(self):
-        response = self.client.get(self.detail_url)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['id'], self.post2.id)
-        self.assertEqual(response.data['title'], self.post2.title)
-        self.assertNotEqual(response.data['body'], self.post.body)
-
-    def test_post_detail_404(self):
-        response = self.client.get(self.detail_url_404)
-        self.assertEqual(response.status_code, 404)
-
 class TestUsersViewSets(TestCase):
     def setUp(self):
         # Create Objects
