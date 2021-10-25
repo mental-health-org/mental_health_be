@@ -96,3 +96,6 @@ class TestUserSerializer(TestCase):
 
         self.assertEqual(set(data.keys()), set(["id", "username", "created_at", "updated_at"]))
 
+    def test_username(self):
+        data = self.serializer.data
+        self.assertEqual(data['username'], self.user.username)
