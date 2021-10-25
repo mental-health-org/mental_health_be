@@ -14,7 +14,7 @@ class QuestionsSerializer(serializers.ModelSerializer):
         return tag_names
 
     def get_response_count(self, obj):
-        obj.response_set.all().count()
+        return obj.response_set.all().count()
 
     class Meta:
         model = Post
