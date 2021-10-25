@@ -53,3 +53,9 @@ class TestPostSerializer(TestCase):
         self.post = Post.objects.create(**self.post_attributes)
         self.serializer = PostSerializer(instance=self.post)
 
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+
+        self.assertEqual(set(data.keys()), set(["id", "user", "title", "body",
+        "upvote", "downvote", "tagging", "created_at", "updated_at"]))
+
