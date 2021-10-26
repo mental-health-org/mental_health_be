@@ -157,3 +157,23 @@ class QuestionVoteViewSet(viewsets.ViewSet):
         vote.update(vote_type = int(request.data["vote_type"]))
         return FinalResponse("vote updated", status=status.HTTP_201_CREATED)
 
+class ResponseVoteViewSet(viewsets.ViewSet):
+
+    def create(self, request):
+        if User.objects.get(id=request.data["user"]) == None:
+            return FinalResponse("You must be logged in", status=status.HTTP_404_NOT_FOUND)
+
+        response_obj = Response.objects.get(id=request.data["response"])
+        user_obj = User.objects.get(id=request.data["user"])
+
+        vote = ResponseVote.objects.filter(user = user_obj.id, response=response_obj.id)
+        if vote.first() == None:
+            ResponseVote.objects.create(response = response_obj, user = user_obj, vote_type = request.data["vote_type"])
+            return FinalResponse("vote updated", status=status.HTTP_201_CREATED)
+
+        if vote.first().vote_type == int(request.data["vote_type"]):
+            vote.update(vote_type = 3)
+            return FinalResponse("vote updated", status=status.HTTP_201_CREATED)
+
+        vote.update(vote_type = int(request.data["vote_type"]))
+        return FinalResponse("vote updated", status=status.HTTP_201_CREATED)
