@@ -186,3 +186,19 @@ class TestQuestionVoteViewSet(TestCase):
         self.user = User.objects.create(username = 'Orson Wells')
         self.post = Post.objects.create( user = self.user, title = 'Test Title', body = 'ipsum lorem')
 
+    def test_question_votes_create(self):
+        response = self.client.post("/api/v1/qvote/", {"user": str(self.user.id), "post": str(self.post.id), "vote_type": "1"})
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(1, len(QuestionVotes.objects.all()))
+        self.assertEqual(1, QuestionVotes.objects.first().vote_type)
+
+        # Vote type can be changed to downvote
+        response = self.client.post("/api/v1/qvote/", {"user": str(self.user.id), "post": str(self.post.id), "vote_type": "2"})
+        self.assertEqual(1, len(QuestionVotes.objects.all()))
+        self.assertEqual(2, QuestionVotes.objects.first().vote_type)
+
+        # Vote type can be changed to novote
+        response = self.client.post("/api/v1/qvote/", {"user": str(self.user.id), "post": str(self.post.id), "vote_type": "2"})
+        self.assertEqual(1, len(QuestionVotes.objects.all()))
+        self.assertEqual(3, QuestionVotes.objects.first().vote_type)
+
