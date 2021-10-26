@@ -42,6 +42,9 @@ class SingleQuestionSerializer(serializers.ModelSerializer):
     responses = serializers.SerializerMethodField()
     user = serializers.SerializerMethodField()
 
+    def get_downvotes(self, obj):
+        return QuestionVotes.objects.filter(vote_type = 2, post=obj.id).count()
+
     def get_tagging(self, obj):
         tag_names = []
         for tag in obj.tagging.all():
