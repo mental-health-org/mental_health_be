@@ -33,7 +33,7 @@ class TestResponseSerializer(TestCase):
     def test_contains_expected_fields(self):
         data = self.serializer.data
 
-        self.assertEqual(set(data.keys()), set(["id", "user", "post", "body"]))
+        self.assertEqual(set(data.keys()), set(["id", "user", "upvotes", "downvotes" ,"post", "body"]))
 
     def test_body_field(self):
         data = self.serializer.data
@@ -57,7 +57,7 @@ class TestPostSerializer(TestCase):
         data = self.serializer.data
 
         self.assertEqual(set(data.keys()), set(["id", "user", "title", "body",
-        "upvote", "downvote", "tagging", "created_at", "updated_at"]))
+        "votes", "tagging", "created_at", "updated_at"]))
 
     def test_title_field(self):
         data = self.serializer.data
@@ -66,14 +66,6 @@ class TestPostSerializer(TestCase):
     def test_body_field(self):
         data = self.serializer.data
         self.assertEqual(data['body'], self.post.body)
-
-    def test_upvote_field(self):
-        data = self.serializer.data
-        self.assertEqual(data['upvote'], self.post.upvote)
-
-    def test_downvote_field(self):
-        data = self.serializer.data
-        self.assertEqual(data['downvote'], self.post.downvote)
 
     def test_tagging_field(self):
         self.tag = Tag.objects.create(name = "Help")
