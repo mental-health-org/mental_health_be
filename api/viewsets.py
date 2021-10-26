@@ -135,3 +135,25 @@ class ResponsesViewSet(viewsets.ViewSet):
 
     def perform_destroy(self, instance):
         instance.delete()
+
+class QuestionVoteViewSet(viewsets.ViewSet):
+
+    def create(self, request):
+        if User.objects.get(id=request.data["user"]) == None:
+            return FinalResponse("You must be logged in", status=status.HTTP_404_NOT_FOUND)
+
+        post_obj = Post.objects.get(id=request.data["post"])
+        user_obj = User.objects.get(id=request.data["user"])
+
+        vote = QuestionVotes.objects.filter(user = user_obj.id, post=post_obj.id)
+        if vote.first() == None:
+            QuestionVotes.objects.create(post = post_obj, user = user_obj, vote_type = request.data["vote_type"])
+            return FinalResponse("vote updated", status=status.HTTP_201_CREATED)
+
+        if vote.first().vote_type == int(request.data["vote_type"]):
+            vote.update(vote_type = 3)
+            return FinalResponse("vote updated", status=status.HTTP_201_CREATED)
+
+        vote.update(vote_type = int(request.data["vote_type"]))
+        return FinalResponse("vote updated", status=status.HTTP_201_CREATED)
+
