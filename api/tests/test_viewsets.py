@@ -15,16 +15,11 @@ class TestQuestionsViewSets(TestCase):
         self.post2 = Post.objects.create( user = self.user, title = 'Second Title',
             body = 'dolor sit amet'
         )
-        self.questions_request = RequestFactory().post('/submit/',{'title': 'Third Title',
-            'body': 'some thoughtful question',
-            'tags': ['depression', 'anxiety']
-        })
 
         # Get URL's
         self.list_url = reverse('questions-list')
         self.detail_url = reverse('questions-detail', args={self.post2.id})
         self.detail_url_404 = reverse('questions-detail', args={0})
-        # self.create_url = ('questions-list', self.questions_request)
 
     def test_questions_list(self):
         response = self.client.get(self.list_url)
