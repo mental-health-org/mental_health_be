@@ -7,6 +7,14 @@ class QuestionsSerializer(serializers.ModelSerializer):
     tagging = serializers.SerializerMethodField()
     response_count = serializers.SerializerMethodField()
     user = serializers.SerializerMethodField()
+    upvotes = serializers.SerializerMethodField()
+    downvotes = serializers.SerializerMethodField()
+
+    def get_upvotes(self, obj):
+        return QuestionVotes.objects.filter(vote_type = 1, post=obj.id).count()
+
+    def get_downvotes(self, obj):
+        return QuestionVotes.objects.filter(vote_type = 2, post=obj.id).count()
 
     def get_tagging(self, obj):
         tag_names = []
@@ -27,7 +35,7 @@ class QuestionsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'body', 'user', 'response_count', 'upvote', 'downvote', 'tagging', 'created_at', 'updated_at')
+        fields = ('id', 'title', 'body', 'user', 'response_count', 'tagging', 'upvotes', 'downvotes', 'created_at', 'updated_at')
 
 class SingleQuestionSerializer(serializers.ModelSerializer):
     tagging = serializers.SerializerMethodField()
