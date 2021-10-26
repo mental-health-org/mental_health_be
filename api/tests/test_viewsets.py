@@ -202,3 +202,11 @@ class TestQuestionVoteViewSet(TestCase):
         self.assertEqual(1, len(QuestionVotes.objects.all()))
         self.assertEqual(3, QuestionVotes.objects.first().vote_type)
 
+class TestResponseVoteViewSet(TestCase):
+
+    def setUp(self):
+        # Create Objects
+        self.user = User.objects.create(username = 'Orson Wells')
+        self.post = Post.objects.create( user = self.user, title = 'Test Title', body = 'ipsum lorem')
+        self.response1 = Response.objects.create( user = self.user, post = self.post, body = 'ipsum lorem')
+
