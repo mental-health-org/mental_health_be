@@ -1,4 +1,4 @@
-# Questions Endpoints
+# Question Endpoints
 
 HTTP Verb | Endpoint          | Description
 :--------:|-------------------| -----------
