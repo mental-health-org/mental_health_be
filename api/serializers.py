@@ -92,12 +92,21 @@ class TagsSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 class ResponseSerializer(serializers.ModelSerializer):
+    upvotes = serializers.SerializerMethodField()
+    downvotes = serializers.SerializerMethodField()
+
+    def get_upvotes(self, obj):
+        return ResponseVote.objects.filter(vote_type = 1, response=obj.id).count()
+
+    def get_downvotes(self, obj):
+        return ResponseVote.objects.filter(vote_type = 2, response=obj.id).count()
 
     class Meta:
         model = Response
-        fields = ('id', 'user', 'post', 'body')
+        fields = ('id', 'user', 'post','upvotes', 'downvotes', 'body')
 
 class PostSerializer(serializers.ModelSerializer):
+
 
     class Meta:
         model = Post
