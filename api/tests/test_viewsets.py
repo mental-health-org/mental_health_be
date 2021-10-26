@@ -178,3 +178,11 @@ class TestResponsesViewSets(TestCase):
         response = self.client.delete("/api/v1/responses/"+str(self.response.id)+"/", content_type='application/json')
         self.assertEqual(response.status_code, 204)
         self.assertEqual(Response.objects.all().count(), 2)
+
+class TestQuestionVoteViewSet(TestCase):
+
+    def setUp(self):
+        # Create Objects
+        self.user = User.objects.create(username = 'Orson Wells')
+        self.post = Post.objects.create( user = self.user, title = 'Test Title', body = 'ipsum lorem')
+
