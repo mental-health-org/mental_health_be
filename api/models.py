@@ -54,5 +54,14 @@ class QuestionVotes(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+class ResponseVote(models.Model):
+    class Vote(models.IntegerChoices):
+        UPVOTE = 1, "upvote"
+        DOWNVOTE = 2, "downvote"
+        NOVOTE = 3, "novote"
+
+    user = models.ForeignKey(User, related_name='user_comment_vote', default=None, blank=True, on_delete=models.CASCADE)
+    response = models.ForeignKey(Response, related_name='response_comment_vote', default=None, blank=True, on_delete=models.CASCADE)
+    vote_type = models.PositiveSmallIntegerField(choices=Vote.choices, default=Vote.NOVOTE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
