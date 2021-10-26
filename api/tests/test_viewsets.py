@@ -210,3 +210,18 @@ class TestResponseVoteViewSet(TestCase):
         self.post = Post.objects.create( user = self.user, title = 'Test Title', body = 'ipsum lorem')
         self.response1 = Response.objects.create( user = self.user, post = self.post, body = 'ipsum lorem')
 
+    def test_response_votes_create(self):
+        response = self.client.post("/api/v1/rvote/", {"user": str(self.user.id), "response": str(self.response1.id), "vote_type": "1"})
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(1, len(ResponseVote.objects.all()))
+        self.assertEqual(1, ResponseVote.objects.first().vote_type)
+
+        # Vote type can be changed to downvote
+        response = self.client.post("/api/v1/rvote/", {"user": str(self.user.id), "response": str(self.response1.id), "vote_type": "2"})
+        self.assertEqual(1, len(ResponseVote.objects.all()))
+        self.assertEqual(2, ResponseVote.objects.first().vote_type)
+
+        # Vote type can be changed to novote
+        response = self.client.post("/api/v1/rvote/", {"user": str(self.user.id), "response": str(self.response1.id), "vote_type": "2"})
+        self.assertEqual(1, len(ResponseVote.objects.all()))
+        self.assertEqual(3, ResponseVote.objects.first().vote_type)
