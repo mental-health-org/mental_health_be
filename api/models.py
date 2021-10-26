@@ -37,7 +37,9 @@ class Response(models.Model):
     user = models.ForeignKey(User,null=True, blank=True, default=None, on_delete=models.SET_NULL)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     body = models.TextField(max_length=5000)
-    upvote = models.IntegerField(default = 0)
-    downvote = models.IntegerField(default = 0)
+    votes = models.ManyToManyField(User, related_name='user_response_vote', through='ResponseVote')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
