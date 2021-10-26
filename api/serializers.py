@@ -61,6 +61,7 @@ class SingleQuestionSerializer(serializers.ModelSerializer):
         responses = []
         for response in obj.response_set.all():
             response_data = {}
+            response_data['id'] = response.id
             response_data['body'] = response.body
             response_data['user'] = response.user
             response_data['upvote']= ResponseVote.objects.filter(vote_type = 1, response=response.id).count()
