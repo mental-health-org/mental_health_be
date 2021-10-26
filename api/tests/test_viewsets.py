@@ -15,16 +15,11 @@ class TestQuestionsViewSets(TestCase):
         self.post2 = Post.objects.create( user = self.user, title = 'Second Title',
             body = 'dolor sit amet'
         )
-        self.questions_request = RequestFactory().post('/submit/',{'title': 'Third Title',
-            'body': 'some thoughtful question',
-            'tags': ['depression', 'anxiety']
-        })
 
         # Get URL's
         self.list_url = reverse('questions-list')
         self.detail_url = reverse('questions-detail', args={self.post2.id})
         self.detail_url_404 = reverse('questions-detail', args={0})
-        # self.create_url = ('questions-list', self.questions_request)
 
     def test_questions_list(self):
         response = self.client.get(self.list_url)
@@ -183,3 +178,50 @@ class TestResponsesViewSets(TestCase):
         response = self.client.delete("/api/v1/responses/"+str(self.response.id)+"/", content_type='application/json')
         self.assertEqual(response.status_code, 204)
         self.assertEqual(Response.objects.all().count(), 2)
+
+class TestQuestionVoteViewSet(TestCase):
+
+    def setUp(self):
+        # Create Objects
+        self.user = User.objects.create(username = 'Orson Wells')
+        self.post = Post.objects.create( user = self.user, title = 'Test Title', body = 'ipsum lorem')
+
+    def test_question_votes_create(self):
+        response = self.client.post("/api/v1/qvote/", {"user": str(self.user.id), "post": str(self.post.id), "vote_type": "1"})
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(1, len(QuestionVotes.objects.all()))
+        self.assertEqual(1, QuestionVotes.objects.first().vote_type)
+
+        # Vote type can be changed to downvote
+        response = self.client.post("/api/v1/qvote/", {"user": str(self.user.id), "post": str(self.post.id), "vote_type": "2"})
+        self.assertEqual(1, len(QuestionVotes.objects.all()))
+        self.assertEqual(2, QuestionVotes.objects.first().vote_type)
+
+        # Vote type can be changed to novote
+        response = self.client.post("/api/v1/qvote/", {"user": str(self.user.id), "post": str(self.post.id), "vote_type": "2"})
+        self.assertEqual(1, len(QuestionVotes.objects.all()))
+        self.assertEqual(3, QuestionVotes.objects.first().vote_type)
+
+class TestResponseVoteViewSet(TestCase):
+
+    def setUp(self):
+        # Create Objects
+        self.user = User.objects.create(username = 'Orson Wells')
+        self.post = Post.objects.create( user = self.user, title = 'Test Title', body = 'ipsum lorem')
+        self.response1 = Response.objects.create( user = self.user, post = self.post, body = 'ipsum lorem')
+
+    def test_response_votes_create(self):
+        response = self.client.post("/api/v1/rvote/", {"user": str(self.user.id), "response": str(self.response1.id), "vote_type": "1"})
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(1, len(ResponseVote.objects.all()))
+        self.assertEqual(1, ResponseVote.objects.first().vote_type)
+
+        # Vote type can be changed to downvote
+        response = self.client.post("/api/v1/rvote/", {"user": str(self.user.id), "response": str(self.response1.id), "vote_type": "2"})
+        self.assertEqual(1, len(ResponseVote.objects.all()))
+        self.assertEqual(2, ResponseVote.objects.first().vote_type)
+
+        # Vote type can be changed to novote
+        response = self.client.post("/api/v1/rvote/", {"user": str(self.user.id), "response": str(self.response1.id), "vote_type": "2"})
+        self.assertEqual(1, len(ResponseVote.objects.all()))
+        self.assertEqual(3, ResponseVote.objects.first().vote_type)
