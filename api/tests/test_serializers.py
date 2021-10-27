@@ -152,3 +152,11 @@ class TestSingleQuestionSerializer(TestCase):
         self.assertEqual(data["responses"][0]["upvote"], 0)
         self.assertEqual(data["responses"][0]["downvote"], 0)
 
+    def test_responses_with_user(self):
+        self.response = Response.objects.create(user = self.user, post = self.post, body = "Test Response")
+        self.serializer = SingleQuestionSerializer(instance=self.post)
+        data = self.serializer.data
+
+        self.assertEqual(data["responses"][0]["user"], None)
+        self.assertEqual(data["responses"][1]["user"]["username"], self.user.username)
+        self.assertEqual(data["responses"][1]["user"]["title"], self.user.title)
