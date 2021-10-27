@@ -78,3 +78,15 @@ class TestQuestionVoteCase(TestCase):
     def test_questions_vote(self):
         self.assertEqual(2, self.post.votes.count())
 
+class TestResponseVoteCase(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(username = 'Orson Wells')
+        self.post = Post.objects.create( user = self.user, title = 'Test Title')
+        self.response = Response.objects.create(user = self.user, post = self.post, body = 'ipsum lorem')
+
+        ResponseVote.objects.create(user = self.user, response =  self.response, vote_type = 1)
+        ResponseVote.objects.create(user = self.user, response =  self.response, vote_type = 2)
+
+    def test_questions_vote(self):
+        self.assertEqual(2, self.response.votes.count())
