@@ -52,6 +52,13 @@ class TestResponseSerializer(TestCase):
 
         self.assertEqual(data['upvotes'], 1)
 
+    def test_downvotes_field(self):
+        ResponseVote.objects.create(response = self.response, user = self.user, vote_type = 2)
+        self.serializer = ResponseSerializer(instance=self.response)
+        data = self.serializer.data
+
+        self.assertEqual(data['downvotes'], 1)
+
 class TestPostSerializer(TestCase):
 
     def setUp(self):
