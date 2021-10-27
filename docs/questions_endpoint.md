@@ -12,7 +12,7 @@ GET       | /filter/questions | Filter questions by tag name
 
 ## Get All Questions
 
-Returns a list of all questions from newest to oldest
+Return a list of all questions from newest to oldest
 
 `/questions`
 
@@ -63,7 +63,7 @@ STATUS: 200 OK
 
 ## Post a Question
 
-Adds a new question to the list
+Add a new question to the list
 
 `/questions/`
 
