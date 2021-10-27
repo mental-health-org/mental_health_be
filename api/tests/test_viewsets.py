@@ -128,6 +128,13 @@ class TestUsersViewSets(TestCase):
         self.assertEqual(response.status_code, 204)
         self.assertEqual(User.objects.all().count(), 0)
 
+    def test_users_patch(self):
+        old_username = User.objects.last().username
+        response = self.client.patch("/api/v1/users/"+str(self.user.id)+"/", data={"username": "gooduser"}, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(User.objects.last().username, old_username)
+
+
 class TestResponsesViewSets(TestCase):
     def setUp(self):
         # Create Objects
