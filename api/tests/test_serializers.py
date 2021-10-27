@@ -136,3 +136,8 @@ class TestSingleQuestionSerializer(TestCase):
         data = self.serializer.data
         self.assertEqual(data['body'], self.post.body)
 
+    def test_user(self):
+        data = self.serializer.data
+        self.assertEqual(data["user"]["username"], self.user.username)
+        self.assertEqual(data["user"]["title"], self.user.title)
+
