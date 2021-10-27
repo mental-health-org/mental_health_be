@@ -128,3 +128,7 @@ class TestSingleQuestionSerializer(TestCase):
         self.assertEqual(set(data.keys()), set(['id', 'title', 'body', 'user',
         'tagging', 'responses', 'upvotes', 'downvotes' ,'created_at', 'updated_at']))
 
+    def test_title(self):
+        data = self.serializer.data
+        self.assertEqual(data['title'], self.post.title)
+
