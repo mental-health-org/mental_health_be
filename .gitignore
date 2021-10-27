@@ -16,3 +16,5 @@ cover
 .coverage
 .coverage.*
 coverage.xml
+
+staticfiles
