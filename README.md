@@ -48,26 +48,30 @@ The HeLP Network is a platform that allows helping and law professionals such as
 
 ## Technologies
 
+<center>
+
 | Development | Testing       | Dependencies          |
-|-------------|---------------|-----------------------|
+|:-----------:|:-------------:|:---------------------:|
 | Python 3.9.7| unittest      | djangorestframework   |
 | Django      |               | dotenv                |
 | CircleCI    |               | psycopg2              |
 | Git/Github  |               |                       |
 | Heroku      |               |                       |
 
-<p>
+</center>
+
+<p align="center">
   <b>Framework:</b><br>
   <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" />
 </p>
 
-<p>
+<p align="center">
   <b>Languages:</b><br>
   <img src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/SQL-4169E1.svg?style=for-the-badge&logo=SQL&logoColor=white" />
 </p>
 
-<p>
+<p align="center">
   <b>Tools:</b><br>
   <img src="https://img.shields.io/badge/Atom-66595C.svg?&style=for-the-badge&logo=atom&logoColor=white" />  
   <img src="https://img.shields.io/badge/git-F05032.svg?&style=for-the-badge&logo=git&logoColor=white" />
@@ -77,7 +81,7 @@ The HeLP Network is a platform that allows helping and law professionals such as
   <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white" />
 </p>
 
-<p>
+<p align="center">
   <b>Processes:</b><br>
   <img src="https://img.shields.io/badge/OOP-b81818.svg?&style=for-the-badge&logo=OOP&logoColor=white" />
   <img src="https://img.shields.io/badge/TDD-b87818.svg?&style=for-the-badge&logo=TDD&logoColor=white" />
@@ -89,45 +93,45 @@ The HeLP Network is a platform that allows helping and law professionals such as
 ## Local Setup
 
 1. Create and invoke your virtual environment in your local project directory
-  ```sh
-  python3 -m venv <env>
+   ```
+   $python3 -m venv <env>
 
-  source <env>/bin/activate
-  ```
+   $source <env>/bin/activate
+   ```
 
 2. Fork and clone this repo into your local project directory
 
 4. Install dependencies
-   ```sh
-   python3 -m pip install -r requirements.txt
+   ```
+   $python3 -m pip install -r requirements.txt
    ```
 
 5. Setup the database
-  ```sh
-  psql
+   ```
+   $psql
 
-  CREATE DATABASE <db_name>;
-  ```
+   $CREATE DATABASE <db_name>;
+   ```
 
-6. Add PostgreSQL database info to settings.py file
-  ```py
-  DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '<db_name>',
-        'USER': '<username>',
-        'PASSWORD': '<password>',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-  }
-  ```
+6. Add PostgreSQL database info to `settings.py`
+   ```py
+   DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': '<db_name>',
+         'USER': '<username>',
+         'PASSWORD': '<password>',
+         'HOST': 'localhost',
+         'PORT': '',
+     }
+   }
+   ```
 
 7. Migrate database tables
-`python3 manage.py migrate`
+   `$python3 manage.py migrate`
 
 8. Run server
-`python3 manage.py runserver`
+   `$python3 manage.py runserver`
 
 
 ## Getting Started
@@ -170,12 +174,15 @@ DELETE    | /users/:id/       | Delete a user                                  |
 
 ## Contributors
 
+<center>
+
 ![](https://avatars.githubusercontent.com/u/81713591?s=150)  | ![](https://avatars.githubusercontent.com/u/78898641?s=150) | ![](https://avatars.githubusercontent.com/u/77070949?s=150) | ![](https://avatars.githubusercontent.com/u/60903966?s=150)
  :--:    |  :--:   | :--:    |  :--:
  **Antonio King** | **Jason Knoll** | **Matt Roden** | **Stephanie Magdic**
  [GitHub](https://github.com/antoniojking)  | [GitHub](https://github.com/JasonPKnoll) | [GitHub](https://github.com/Matt-Roden) | [GitHub](https://github.com/stephaniemagdic)
  [LinkedIn](https://www.linkedin.com/in/antoniojking/)| [LinkedIn](https://www.linkedin.com/in/jason-p-knoll/) | [LinkedIn](https://www.linkedin.com/in/matt-roden-35bb3413b/) | [LinkedIn](https://www.linkedin.com/in/stephaniemagdic/)
 
+</center>
 
 ## Acknowledgements
 
