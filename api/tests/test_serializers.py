@@ -145,3 +145,10 @@ class TestSingleQuestionSerializer(TestCase):
         data = self.serializer.data
         self.assertEqual(data["tagging"][0], self.tag.name)
 
+    def test_responses(self):
+        data = self.serializer.data
+        self.assertEqual(data["responses"][0]["id"], self.response.id)
+        self.assertEqual(data["responses"][0]["body"], self.response.body)
+        self.assertEqual(data["responses"][0]["upvote"], 0)
+        self.assertEqual(data["responses"][0]["downvote"], 0)
+
