@@ -122,3 +122,9 @@ class TestSingleQuestionSerializer(TestCase):
         self.response = Response.objects.create(post = self.post, body = "Test Response")
         self.serializer = SingleQuestionSerializer(instance=self.post)
 
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+
+        self.assertEqual(set(data.keys()), set(['id', 'title', 'body', 'user',
+        'tagging', 'responses', 'upvotes', 'downvotes' ,'created_at', 'updated_at']))
+
