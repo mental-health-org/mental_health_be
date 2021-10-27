@@ -15,7 +15,7 @@
   </a>
 </p>
 
-<h4 align="center">Ask. Help. Connect. Grow.</h4>
+<h4 align="center">Help. Learn. Connect. Grow.</h4>
 
 <p align="center">
 The HeLP Network API is a RESTful API for the HeLP Network frontend application. To experience the UI our frontend team built please visit https://mental-health-fe.herokuapp.com/. Otherwise you may hit our endpoints through an http request helper such as Postman.
@@ -25,6 +25,7 @@ The HeLP Network API is a RESTful API for the HeLP Network frontend application.
   <a href="#about-the-project">About The Project</a> •
   <a href="#technologies">Technologies</a> •
   <a href="#local-setup">Local Setup</a> •
+  <a href="#testing">Testing</a> •
   <a href="#getting-started">Getting Started</a> •
   <a href="#endpoints">Endpoints</a> •
   <a href="#database-schema">Database Schema</a> •
@@ -48,31 +49,19 @@ The HeLP Network is a platform that allows helping and law professionals such as
 
 ## Technologies
 
-<center>
-
-| Development | Testing       | Dependencies          |
-|:-----------:|:-------------:|:---------------------:|
-| Python 3.9.7| unittest      | djangorestframework   |
-| Django      |               | dotenv                |
-| CircleCI    |               | psycopg2              |
-| Git/Github  |               |                       |
-| Heroku      |               |                       |
-
-</center>
-
 <p align="center">
-  <b>Framework:</b><br>
+  <b>Framework</b><br>
   <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" />
 </p>
 
 <p align="center">
-  <b>Languages:</b><br>
+  <b>Languages</b><br>
   <img src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/SQL-4169E1.svg?style=for-the-badge&logo=SQL&logoColor=white" />
 </p>
 
 <p align="center">
-  <b>Tools:</b><br>
+  <b>Tools</b><br>
   <img src="https://img.shields.io/badge/Atom-66595C.svg?&style=for-the-badge&logo=atom&logoColor=white" />  
   <img src="https://img.shields.io/badge/git-F05032.svg?&style=for-the-badge&logo=git&logoColor=white" />
   <img src="https://img.shields.io/badge/GitHub-181717.svg?&style=for-the-badge&logo=github&logoColor=white" />
@@ -82,12 +71,24 @@ The HeLP Network is a platform that allows helping and law professionals such as
 </p>
 
 <p align="center">
-  <b>Processes:</b><br>
+  <b>Processes</b><br>
   <img src="https://img.shields.io/badge/OOP-b81818.svg?&style=for-the-badge&logo=OOP&logoColor=white" />
   <img src="https://img.shields.io/badge/TDD-b87818.svg?&style=for-the-badge&logo=TDD&logoColor=white" />
   <img src="https://img.shields.io/badge/MVC-b8b018.svg?&style=for-the-badge&logo=MVC&logoColor=white" />
   <img src="https://img.shields.io/badge/REST-33b818.svg?&style=for-the-badge&logo=REST&logoColor=white" />  
 </p>
+
+<center>
+
+| Development | Testing       | Dependencies          |
+|:-----------:|:-------------:|:---------------------:|
+| Python 3.9.7| unittest      | djangorestframework   |
+| Django 3.2.8| coverage      | dotenv                |
+| Circle CI   |               | psycopg2              |
+| Git/Github  |               |                       |
+| Heroku      |               |                       |
+
+</center>
 
 
 ## Local Setup
@@ -128,11 +129,28 @@ The HeLP Network is a platform that allows helping and law professionals such as
    ```
 
 7. Migrate database tables
-   `$python3 manage.py migrate`
+   ```
+   $python3 manage.py migrate`
+   ```
 
 8. Run server
-   `$python3 manage.py runserver`
+   ```
+   $python3 manage.py runserver`
+   ```
 
+## Testing
+
+- To run the test suite:
+  ```
+  $python3 manage.py test
+  ```
+
+- To assess test coverage:
+  ```
+  $coverage run --source='.' manage.py test
+
+  $coverage report
+  ```
 
 ## Getting Started
 
@@ -169,7 +187,7 @@ DELETE    | /users/:id/       | Delete a user                                  |
 
 
 ## Database Schema
-![schema](/storage/images/schema.png)
+![HeLP Network Database Schema](https://dm2301files.storage.live.com/y4m1sp7aOYQsBT1AbCAFoMqSoSOVQ3RExsRJEZs_r2gTp9lbzscbDiwKLijbLms62nBFv8uycL7OL4rCOyVZKGKZ0-aDvx3tXz5B-3b2K3PqoP_O5jA6MN6emeEtw_oIQnau6XwhP07jdiMgfQhXxeSqtV2H7JCiCBjbQQXJiCFf6gQmMgwiz0ZpFYIpsRXs2sv?width=1145&height=772&cropmode=none)
 
 
 ## Contributors
