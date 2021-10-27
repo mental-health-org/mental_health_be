@@ -141,3 +141,7 @@ class TestSingleQuestionSerializer(TestCase):
         self.assertEqual(data["user"]["username"], self.user.username)
         self.assertEqual(data["user"]["title"], self.user.title)
 
+    def test_tagging(self):
+        data = self.serializer.data
+        self.assertEqual(data["tagging"][0], self.tag.name)
+
