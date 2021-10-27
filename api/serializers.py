@@ -125,8 +125,5 @@ def tags_serializer(queryset):
         all_tags.append(tag.name)
     return {"id": None, "type": "tags", "attributes" : all_tags}
 
-def basic_serializer(objects):
-    return core_serializers.serialize('json', [objects])
-
 def header_serializer(type, attributes):
     return { 'id': None, 'type': type, 'attributes': attributes }
