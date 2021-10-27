@@ -18,16 +18,17 @@
 <h4 align="center">Ask. Help. Connect. Grow.</h4>
 
 <p align="center">
-The HeLP Network API is a RESTful API for the HeLP Network frontend application. To experience the UI our frontend team built please visit their [website](http://mental-health-fe.herokuapp.com/). Otherwise you may hit our endpoints through an http request helper such as Postman.
+The HeLP Network API is a RESTful API for the HeLP Network frontend application. To experience the UI our frontend team built please visit https://mental-health-fe.herokuapp.com/. Otherwise you may hit our endpoints through an http request helper such as Postman.
 </p><br>
 
 <p align="center">
   <a href="#about-the-project">About The Project</a> •
-  <a href="#tools-used">Tools Used</a> •
-  <a href="#set-up">Set Up</a> •
-  <a href="#how-to-use">How To Use</a> •
+  <a href="#technologies">Technologies</a> •
+  <a href="#local-setup">Local Setup</a> •
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#endpoints">Endpoints</a> •
   <a href="#database-schema">Database Schema</a> •
-  <a href="#contributing">Contributing</a> •
+  <a href="#contributors">Contributors</a> •
   <a href="#acknowledgements">Acknowledgements</a>
 </p>
 
@@ -146,44 +147,34 @@ The following table presents each API endpoint and its documentation.
 
 HTTP Verb | Endpoint          | Description                                    | Docs
 ----------|-------------------|------------------------------------------------|------
-GET       | /questions        | Get all questions                              | [doc](questions_endpoint.md)
-POST      | /questions/       | Ask a new question                             | [doc](questions_endpoint.md)
-GET       | /search/questions | Find questions with keyword or phrase in title | [doc](questions_endpoint.md)
-GET       | /filter/questions | Filter questions by tag name                   | [doc](questions_endpoint.md)
-GET       | /questions/:id    | Get a single question                          | [doc](questions_endpoint.md)
-PATCH     | /questions/:id/   | Update a question                              | [doc](questions_endpoint.md)
-DELETE    | /questions/:id/   | Delete a question                              | [doc](questions_endpoint.md)
-POST      | /responses/       | Post a response to a question                  | [doc](responses_endpoint.md)
-PATCH     | /responses/:id/   | Update a response                              | [doc](responses_endpoint.md)
-DELETE    | /responses/:id/   | Delete a response                              | [doc](responses_endpoint.md)
-GET       | /tags             | Get all tags                                   | [doc](tags_endpoint.md)
-GET       | /tags/:id         | Get a single tag                               | [doc](tags_endpoint.md)
-POST      | /users/           | Create a new user                              | [doc](users_endpoint.md)
-GET       | /users/:id        | Get a single user                              | [doc](users_endpoint.md)
-DELETE    | /users/:id/       | Delete a user                                  | [doc](users_endpoint.md)
+GET       | /questions        | Get all questions                              | [doc](./docs/questions_endpoint.md)
+POST      | /questions/       | Ask a new question                             | [doc](./docs/questions_endpoint.md)
+GET       | /search/questions | Find questions with keyword or phrase in title | [doc](./docs/questions_endpoint.md)
+GET       | /filter/questions | Filter questions by tag name                   | [doc](./docs/questions_endpoint.md)
+GET       | /questions/:id    | Get a single question                          | [doc](./docs/questions_endpoint.md)
+PATCH     | /questions/:id/   | Update a question                              | [doc](./docs/questions_endpoint.md)
+DELETE    | /questions/:id/   | Delete a question                              | [doc](./docs/questions_endpoint.md)
+POST      | /responses/       | Post a response to a question                  | [doc](./docs/responses_endpoint.md)
+PATCH     | /responses/:id/   | Update a response                              | [doc](./docs/responses_endpoint.md)
+DELETE    | /responses/:id/   | Delete a response                              | [doc](./docs/responses_endpoint.md)
+GET       | /tags             | Get all tags                                   | [doc](./docs/tags_endpoint.md)
+GET       | /tags/:id         | Get a single tag                               | [doc](./docs/tags_endpoint.md)
+POST      | /users/           | Create a new user                              | [doc](./docs/users_endpoint.md)
+GET       | /users/:id        | Get a single user                              | [doc](./docs/users_endpoint.md)
+DELETE    | /users/:id/       | Delete a user                                  | [doc](./docs/users_endpoint.md)
 
 
 ## Database Schema
 ![schema](/storage/images/schema.png)
 
 
-## Contributing
+## Contributors
 
-![](https://avatars.githubusercontent.com/u/81713591?s=25) **Antonio King**
-- [GitHub](https://github.com/antoniojking)
-- [LinkedIn](https://www.linkedin.com/in/antoniojking/)
-
-![](https://avatars.githubusercontent.com/u/78898641?s=25) **Jason Knoll**
-- [GitHub](https://github.com/JasonPKnoll)
-- [LinkedIn](https://www.linkedin.com/in/jason-p-knoll/)
-
-![](https://avatars.githubusercontent.com/u/77070949?s=25) **Matt Roden**
-- [GitHub](https://github.com/Matt-Roden)
-- [LinkedIn](https://www.linkedin.com/in/matt-roden-35bb3413b/)
-
-![](https://avatars.githubusercontent.com/u/60903966?s=25) **Stephanie Magdic**
-- [GitHub](https://github.com/stephaniemagdic)
-- [LinkedIn](https://www.linkedin.com/in/stephaniemagdic/)
+![](https://avatars.githubusercontent.com/u/81713591?s=150)  | ![](https://avatars.githubusercontent.com/u/78898641?s=150) | ![](https://avatars.githubusercontent.com/u/77070949?s=150) | ![](https://avatars.githubusercontent.com/u/60903966?s=150)
+ :--:    |  :--:   | :--:    |  :--:
+ **Antonio King** | **Jason Knoll** | **Matt Roden** | **Stephanie Magdic**
+ [GitHub](https://github.com/antoniojking)  | [GitHub](https://github.com/JasonPKnoll) | [GitHub](https://github.com/Matt-Roden) | [GitHub](https://github.com/stephaniemagdic)
+ [LinkedIn](https://www.linkedin.com/in/antoniojking/)| [LinkedIn](https://www.linkedin.com/in/jason-p-knoll/) | [LinkedIn](https://www.linkedin.com/in/matt-roden-35bb3413b/) | [LinkedIn](https://www.linkedin.com/in/stephaniemagdic/)
 
 
 ## Acknowledgements
