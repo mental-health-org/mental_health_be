@@ -23,7 +23,7 @@ class TestTagsSerializer(TestCase):
 class TestResponseSerializer(TestCase):
 
     def setUp(self):
-
+        self.user = User.objects.create(username = 'Ipsum')
         self.post = Post.objects.create(title = 'Test Title', body = 'ipsum lorem')
         self.response_attributes = { "post": self.post, "body": "Some Body"}
 
@@ -44,6 +44,13 @@ class TestResponseSerializer(TestCase):
         data = self.serializer.data
 
         self.assertEqual(data['post'], self.post.id)
+
+    def test_upvotes_field(self):
+        ResponseVote.objects.create(response = self.response, user = self.user, vote_type = 1)
+        self.serializer = ResponseSerializer(instance=self.response)
+        data = self.serializer.data
+
+        self.assertEqual(data['upvotes'], 1)
 
 class TestPostSerializer(TestCase):
 
