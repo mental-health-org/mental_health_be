@@ -78,7 +78,7 @@ The HeLP Network is a platform that allows helping and law professionals such as
   <img src="https://img.shields.io/badge/REST-33b818.svg?&style=for-the-badge&logo=REST&logoColor=white" />  
 </p>
 
-<center>
+<div align="center">
 
 | Development | Testing       | Dependencies          |
 |:-----------:|:-------------:|:---------------------:|
@@ -88,7 +88,7 @@ The HeLP Network is a platform that allows helping and law professionals such as
 | Git/Github  |               |                       |
 | Heroku      |               |                       |
 
-</center>
+</div>
 
 
 ## Local Setup
