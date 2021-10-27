@@ -140,7 +140,7 @@ class QuestionVoteViewSet(viewsets.ViewSet):
 
     def create(self, request):
         if User.objects.get(id=request.data["user"]) == None:
-            return FinalResponse("You must be logged in", status=status.HTTP_404_NOT_FOUND)
+            return FinalResponse("You must be logged in", status=status.HTTP_403_FORBIDDEN)
 
         post_obj = Post.objects.get(id=request.data["post"])
         user_obj = User.objects.get(id=request.data["user"])
@@ -161,7 +161,7 @@ class ResponseVoteViewSet(viewsets.ViewSet):
 
     def create(self, request):
         if User.objects.get(id=request.data["user"]) == None:
-            return FinalResponse("You must be logged in", status=status.HTTP_404_NOT_FOUND)
+            return FinalResponse("You must be logged in", status=status.HTTP_403_FORBIDDEN)
 
         response_obj = Response.objects.get(id=request.data["response"])
         user_obj = User.objects.get(id=request.data["user"])
