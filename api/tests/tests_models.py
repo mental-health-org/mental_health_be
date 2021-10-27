@@ -34,6 +34,10 @@ class TestTagCase(TestCase):
         tag_name = 'Help'
         self.assertEqual(tag_name, self.tag.name)
 
+    def test_string_representation_of_tag(self):
+        expect_representation_tag = '{}'.format(self.tag.name)
+        self.assertEqual(expect_representation_tag, str(self.tag))
+
 class TestTaggingCase(TestCase):
 
     def setUp(self):
