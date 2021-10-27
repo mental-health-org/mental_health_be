@@ -209,6 +209,11 @@ class TestQuestionVoteViewSet(TestCase):
         self.assertEqual(1, len(QuestionVotes.objects.all()))
         self.assertEqual(3, QuestionVotes.objects.first().vote_type)
 
+    # def test_question_votes_create_403(self):
+    #
+    #     response = self.client.post("/api/v1/qvote/", {"user": , "post": str(self.post.id), "vote_type": "1"})
+    #     self.assertEqual(response.status_code, 403)
+
 class TestResponseVoteViewSet(TestCase):
 
     def setUp(self):
@@ -232,3 +237,8 @@ class TestResponseVoteViewSet(TestCase):
         response = self.client.post("/api/v1/rvote/", {"user": str(self.user.id), "response": str(self.response1.id), "vote_type": "2"})
         self.assertEqual(1, len(ResponseVote.objects.all()))
         self.assertEqual(3, ResponseVote.objects.first().vote_type)
+
+    # def test_response_votes_create_403(self):
+    #
+    #     response = self.client.post("/api/v1/qvote/", {"response1": str(self.response1.id), "vote_type": "1"})
+    #     self.assertEqual(response.status_code, 403)
