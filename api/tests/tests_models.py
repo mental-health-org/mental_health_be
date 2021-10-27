@@ -1,5 +1,5 @@
 from django.test import TestCase
-from api.models import User, Post, Tag, Response
+from api.models import *
 
 class TestUserCase(TestCase):
 
@@ -8,8 +8,8 @@ class TestUserCase(TestCase):
         cls.user = User.objects.create(username = 'Orson Wells')
 
     def test_string_representation_of_user(self):
-        expect_representation_user = "Orson Wells"
-        self.assertEqual(expect_representation_user, str(self.user.username))
+        expect_representation_user = '{}'.format(self.user.username)
+        self.assertEqual(expect_representation_user, str(self.user))
 
 class TestPostCase(TestCase):
 
