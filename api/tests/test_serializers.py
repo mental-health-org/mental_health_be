@@ -132,3 +132,7 @@ class TestSingleQuestionSerializer(TestCase):
         data = self.serializer.data
         self.assertEqual(data['title'], self.post.title)
 
+    def test_body(self):
+        data = self.serializer.data
+        self.assertEqual(data['body'], self.post.body)
+
