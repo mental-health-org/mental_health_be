@@ -1,4 +1,3 @@
-<!-- PROJECT INFO -->
 <h1 align="center">HeLP Network API</h1>
 
 <p align="center">
@@ -22,7 +21,6 @@
 The HeLP Network API is a RESTful API for the HeLP Network frontend application. To experience the UI our frontend team built please visit their [website](http://mental-health-fe.herokuapp.com/). Otherwise you may hit our endpoints through an http request helper such as Postman.
 </p><br>
 
-<!-- CONTENTS -->
 <p align="center">
   <a href="#about-the-project">About The Project</a> •
   <a href="#tools-used">Tools Used</a> •
@@ -40,9 +38,11 @@ The HeLP Network is a platform that allows helping and law professionals such as
 
 ### Learning Goals
 
-* Building a RESTful API with a Django/Python backend
-* Collaborating with a frontend team
-* Python TDD practices
+* Use an agile process to turn well defined requirements into deployed and production ready software
+* Implement professional git workflow using Git Rebase
+* Build a RESTful API with a Django/Python
+* Collaborate with front-end team in order to complete and deploy features that have been outlined in the MVP
+* Develop a basic understanding of Python/Django TDD practices
 
 
 ## Technologies
@@ -50,8 +50,8 @@ The HeLP Network is a platform that allows helping and law professionals such as
 | Development | Testing       | Dependencies          |
 |-------------|---------------|-----------------------|
 | Python 3.9.7| unittest      | djangorestframework   |
-| Django      |               |                       |
-| CircleCI    |               |                       |
+| Django      |               | dotenv                |
+| CircleCI    |               | psycopg2              |
 | Git/Github  |               |                       |
 | Heroku      |               |                       |
 
@@ -122,7 +122,11 @@ The HeLP Network is a platform that allows helping and law professionals such as
   }
   ```
 
-7. python manage.py migrate
+7. Migrate database tables
+`python3 manage.py migrate`
+
+8. Run server
+`python3 manage.py runserver`
 
 
 ## Getting Started
@@ -142,21 +146,21 @@ The following table presents each API endpoint and its documentation.
 
 HTTP Verb | Endpoint          | Description                                    | Docs
 ----------|-------------------|------------------------------------------------|------
-GET       | /questions        | Get all questions                              |
-POST      | /questions/       | Ask a new question                             |  
-GET       | /search/questions | Find questions with keyword or phrase in title |  
-GET       | /filter/questions | Filter questions by tag name                   |  
-GET       | /questions/:id    | Get a single question                          |  
-PATCH     | /questions/:id/   | Update a question                              |  
-DELETE    | /questions/:id/   | Delete a question                              |  
-POST      | /responses/       | Post a response to a question                  |  
-PATCH     | /responses/:id/   | Update a response                              |  
-DELETE    | /responses/:id/   | Delete a response                              |  
-GET       | /tags             | Get all tags                                   |  
-GET       | /tags/:id         | Get a single tag                               |  
-POST      | /users/           | Create a new user                              |  
-GET       | /users/:id        | Get a single user                              |  
-DELETE    | /users/:id/       | Delete a user                                  |  
+GET       | /questions        | Get all questions                              | [doc](questions_endpoint.md)
+POST      | /questions/       | Ask a new question                             | [doc](questions_endpoint.md)
+GET       | /search/questions | Find questions with keyword or phrase in title | [doc](questions_endpoint.md)
+GET       | /filter/questions | Filter questions by tag name                   | [doc](questions_endpoint.md)
+GET       | /questions/:id    | Get a single question                          | [doc](questions_endpoint.md)
+PATCH     | /questions/:id/   | Update a question                              | [doc](questions_endpoint.md)
+DELETE    | /questions/:id/   | Delete a question                              | [doc](questions_endpoint.md)
+POST      | /responses/       | Post a response to a question                  | [doc](responses_endpoint.md)
+PATCH     | /responses/:id/   | Update a response                              | [doc](responses_endpoint.md)
+DELETE    | /responses/:id/   | Delete a response                              | [doc](responses_endpoint.md)
+GET       | /tags             | Get all tags                                   | [doc](tags_endpoint.md)
+GET       | /tags/:id         | Get a single tag                               | [doc](tags_endpoint.md)
+POST      | /users/           | Create a new user                              | [doc](users_endpoint.md)
+GET       | /users/:id        | Get a single user                              | [doc](users_endpoint.md)
+DELETE    | /users/:id/       | Delete a user                                  | [doc](users_endpoint.md)
 
 
 ## Database Schema
