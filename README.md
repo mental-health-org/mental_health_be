@@ -104,7 +104,7 @@ Domain: 'https://developer-mental-health-org.herokuapp.com/'
 
 
 ## Database Schema
-![mental_health_org_schema]()
+![schema](/storage/images/schema.png)
 
 ## Contributing
 
