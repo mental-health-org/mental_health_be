@@ -78,7 +78,7 @@ The HeLP Network is a platform that allows helping and law professionals such as
   <img src="https://img.shields.io/badge/REST-33b818.svg?&style=for-the-badge&logo=REST&logoColor=white" />  
 </p>
 
-<center>
+<div align="center">
 
 | Development | Testing       | Dependencies          |
 |:-----------:|:-------------:|:---------------------:|
@@ -88,7 +88,7 @@ The HeLP Network is a platform that allows helping and law professionals such as
 | Git/Github  |               |                       |
 | Heroku      |               |                       |
 
-</center>
+</div>
 
 
 ## Local Setup
@@ -187,7 +187,7 @@ DELETE    | /users/:id/       | Delete a user                                  |
 
 
 ## Database Schema
-![HeLP Network Database Schema](https://dm2301files.storage.live.com/y4m1sp7aOYQsBT1AbCAFoMqSoSOVQ3RExsRJEZs_r2gTp9lbzscbDiwKLijbLms62nBFv8uycL7OL4rCOyVZKGKZ0-aDvx3tXz5B-3b2K3PqoP_O5jA6MN6emeEtw_oIQnau6XwhP07jdiMgfQhXxeSqtV2H7JCiCBjbQQXJiCFf6gQmMgwiz0ZpFYIpsRXs2sv?width=1145&height=772&cropmode=none)
+![HeLP Network Database Schema](/storage/images/schema.png)
 
 
 ## Contributors
