@@ -62,3 +62,9 @@ class LoginViewSet(viewsets.ViewSet):
             return FinalResponse({"Unable to log in with provided credentials."}, status=status.HTTP_400_BAD_REQUEST)
 
 class LogoutViewSet(viewsets.ViewSet):
+
+    def create(self, request):
+        data = {}
+        data['response'] = "Successfully Logged Out"
+        logout(request)
+        return FinalResponse(data, status=status.HTTP_200_OK)
