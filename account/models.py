@@ -57,3 +57,9 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+# Generates Token for newly registered Users
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
