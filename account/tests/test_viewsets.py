@@ -63,3 +63,29 @@ class TestRegisterViewSets(TestCase):
         response = self.client.post("/api/v1/register/",{"invalid": 2})
         self.assertEqual(response.status_code, 400)
 
+class TestLoginViewSets(TestCase):
+    def setUp(self):
+        # Create Objects
+        self.user = {
+                    "username" : 'Orson_Wells',
+                    "email" : 'test@email.com',
+                    "password" : '1a2b3c4d5e',
+                    "password2" :'1a2b3c4d5e',
+                    }
+        self.login = {
+                    "username" : 'Orson_Wells',
+                    "password" : '1a2b3c4d5e'
+                    }
+        # Get URL's
+        self.register_url = reverse("register-list")
+        self.login_url = reverse("login-list")
+
+    def test_user_login(self):
+
+        self.client.post(self.register_url, self.user)
+        response = self.client.post(self.login_url, self.login)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['response'], 'Successful Login')
+        self.assertEqual(response.data['token'], Token.objects.last().key)
+
