@@ -1,5 +1,6 @@
 from django.test import TestCase
 from api.models import *
+from account.models import *
 from api.serializers import *
 
 class TestTagsSerializer(TestCase):
@@ -88,27 +89,6 @@ class TestPostSerializer(TestCase):
 
         data = self.serializer.data
         self.assertEqual(data['tagging'][0], self.post.tagging.first().id)
-
-class TestUserSerializer(TestCase):
-
-    def setUp(self):
-        self.user_attributes = { "username": "New user" }
-
-        self.user = User.objects.create(**self.user_attributes)
-        self.serializer = UserSerializer(instance=self.user)
-
-    def test_contains_expected_fields(self):
-        data = self.serializer.data
-
-        self.assertEqual(set(data.keys()), set(["id", "username", "title", "created_at", "updated_at"]))
-
-    def test_username(self):
-        data = self.serializer.data
-        self.assertEqual(data['username'], self.user.username)
-
-    def test_title(self):
-        data = self.serializer.data
-        self.assertEqual(data['title'], self.user.title)
 
 class TestSingleQuestionSerializer(TestCase):
 

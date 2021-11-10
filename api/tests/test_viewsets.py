@@ -1,5 +1,6 @@
 from django.test import TestCase
 from api.models import *
+from account.models import *
 from django.urls import reverse
 from django.test.client import RequestFactory
 import json
@@ -92,48 +93,6 @@ class TestTagsViewSets(TestCase):
     def test_tags_detail_404(self):
         response = self.client.get(self.detail_url_404)
         self.assertEqual(response.status_code, 404)
-
-class TestUsersViewSets(TestCase):
-    def setUp(self):
-        # Create Objects
-        self.user = User.objects.create(username = 'Billy')
-
-        # Get URL's
-        self.detail_url = reverse("users-detail", args={self.user.id})
-        self.detail_url_404 = reverse('users-detail', args={0})
-
-    def test_users_detail(self):
-        response = self.client.get(self.detail_url)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['username'], self.user.username)
-
-    def test_users_detail_404(self):
-        response = self.client.get(self.detail_url_404)
-        self.assertEqual(response.status_code, 404)
-
-    def test_users_create(self):
-        self.assertEqual(1, len(User.objects.all()))
-
-        response = self.client.post("/api/v1/users/",{"username": "Good User"})
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(2, len(User.objects.all()))
-
-    def test_users_create_400(self):
-
-        response = self.client.post("/api/v1/users/",{"invalid": 2})
-        self.assertEqual(response.status_code, 400)
-
-    def test_delete_user(self):
-        response = self.client.delete("/api/v1/users/"+str(self.user.id)+"/", content_type='application/json')
-        self.assertEqual(response.status_code, 204)
-        self.assertEqual(User.objects.all().count(), 0)
-
-    def test_users_patch(self):
-        old_username = User.objects.last().username
-        response = self.client.patch("/api/v1/users/"+str(self.user.id)+"/", data={"username": "gooduser"}, content_type='application/json')
-        self.assertEqual(response.status_code, 200)
-        self.assertNotEqual(User.objects.last().username, old_username)
-
 
 class TestResponsesViewSets(TestCase):
     def setUp(self):

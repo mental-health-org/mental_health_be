@@ -192,7 +192,7 @@ DELETE    | /users/:id/       | Delete a user                                  |
 
 ## Contributors
 
-<center>
+<div align="center">
 
 ![](https://avatars.githubusercontent.com/u/81713591?s=150)  | ![](https://avatars.githubusercontent.com/u/78898641?s=150) | ![](https://avatars.githubusercontent.com/u/77070949?s=150) | ![](https://avatars.githubusercontent.com/u/60903966?s=150)
  :--:    |  :--:   | :--:    |  :--:
@@ -200,7 +200,7 @@ DELETE    | /users/:id/       | Delete a user                                  |
  [GitHub](https://github.com/antoniojking)  | [GitHub](https://github.com/JasonPKnoll) | [GitHub](https://github.com/Matt-Roden) | [GitHub](https://github.com/stephaniemagdic)
  [LinkedIn](https://www.linkedin.com/in/antoniojking/)| [LinkedIn](https://www.linkedin.com/in/jason-p-knoll/) | [LinkedIn](https://www.linkedin.com/in/matt-roden-35bb3413b/) | [LinkedIn](https://www.linkedin.com/in/stephaniemagdic/)
 
-</center>
+</div>
 
 ## Acknowledgements
 

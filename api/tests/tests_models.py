@@ -1,20 +1,14 @@
 from django.test import TestCase
 from api.models import *
-
-class TestUserCase(TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = User.objects.create(username = 'Orson Wells')
-
-    def test_string_representation_of_user(self):
-        expect_representation_user = '{}'.format(self.user.username)
-        self.assertEqual(expect_representation_user, str(self.user))
+from account.models import *
 
 class TestPostCase(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create(username = 'Orson Wells')
+        self.user = User.objects.create(username = 'Orson_Wells',
+                                        email = 'test@email.com',
+                                        password = '1a2b3c4d5e',
+                                        )
         self.post = Post.objects.create(
             user = self.user,
             title = 'Test Title',
@@ -81,7 +75,10 @@ class TestQuestionVoteCase(TestCase):
 class TestResponseVoteCase(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create(username = 'Orson Wells')
+        self.user = User.objects.create(username = 'Orson_Wells',
+                                        email = 'test@email.com',
+                                        password = '1a2b3c4d5e',
+                                        )
         self.post = Post.objects.create( user = self.user, title = 'Test Title')
         self.response = Response.objects.create(user = self.user, post = self.post, body = 'ipsum lorem')
 
