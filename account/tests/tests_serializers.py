@@ -37,3 +37,19 @@ class TestUserSerializer(TestCase):
     def test_password(self):
         data = self.serializer.data
         self.assertEqual(data['password'], self.user.password)
+
+class TestRegistrationSerializer(TestCase):
+
+    def setUp(self):
+        self.user_attributes = {
+                    "username" : 'Orson_Wells',
+                    "email" : 'email@email.com',
+                    "password" : '1a2b3c4d5e',
+                    "password2" : '1a2b3c4d5e',
+                    }
+
+        self.serializer = RegistrationSerializer(instance=self.user_attributes)
+
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+        self.assertEqual(set(data.keys()), set(["username", "title", "email"]))
