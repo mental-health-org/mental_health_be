@@ -1,4 +1,5 @@
 from .models import *
+from account.models import *
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .serializers import *
@@ -74,37 +75,6 @@ class TagsViewSet(viewsets.ViewSet):
         serializer = TagsSerializer(tag)
         return FinalResponse(serializer.data)
 
-class UsersViewSet(viewsets.ViewSet):
-
-    def retrieve(self, request, pk=None):
-        queryset = User.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = UserSerializer(user)
-        return FinalResponse(serializer.data)
-
-    def create(self, request):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return FinalResponse(serializer.data, status=status.HTTP_201_CREATED)
-
-    def partial_update(self, request, pk=None):
-        queryset = User.objects.all()
-        response = get_object_or_404(queryset, pk=pk)
-        serializer = UserSerializer(response, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return FinalResponse(serializer.data, status=status.HTTP_200_OK)
-
-    def destroy(self, request, *args, **kwargs):
-        instance = User.objects.filter(id=self.kwargs['pk'])
-        self.perform_destroy(instance)
-        return FinalResponse(status=status.HTTP_204_NO_CONTENT)
-
-    def perform_destroy(self, instance):
-        instance.delete()
-
 class ResponsesViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
@@ -139,9 +109,6 @@ class ResponsesViewSet(viewsets.ViewSet):
 class QuestionVoteViewSet(viewsets.ViewSet):
 
     def create(self, request):
-        if User.objects.get(id=request.data["user"]) == None:
-            return FinalResponse("You must be logged in", status=status.HTTP_403_FORBIDDEN)
-
         post_obj = Post.objects.get(id=request.data["post"])
         user_obj = User.objects.get(id=request.data["user"])
 
@@ -160,9 +127,6 @@ class QuestionVoteViewSet(viewsets.ViewSet):
 class ResponseVoteViewSet(viewsets.ViewSet):
 
     def create(self, request):
-        if User.objects.get(id=request.data["user"]) == None:
-            return FinalResponse("You must be logged in", status=status.HTTP_403_FORBIDDEN)
-
         response_obj = Response.objects.get(id=request.data["response"])
         user_obj = User.objects.get(id=request.data["user"])
 
