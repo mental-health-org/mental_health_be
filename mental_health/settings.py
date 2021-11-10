@@ -60,6 +60,7 @@ REST_FRAMEWORK = {
     # or allow read-only access for unathenticated users.
     'DEFAULT_PERMISSION_CLASSES': [],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+AUTH_USER_MODEL = 'account.User'
 }
 
 CORS_ALLOWED_ORIGINS = [
