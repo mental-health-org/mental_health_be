@@ -38,3 +38,23 @@ class TestUsersViewSets(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(User.objects.last().username, old_username)
 
+class TestRegisterViewSets(TestCase):
+    def setUp(self):
+        # Create Objects
+        self.user = {
+                    "username" : 'Orson_Wells',
+                    "email" : 'test@email.com',
+                    "password" : '1a2b3c4d5e',
+                    "password2" :'1a2b3c4d5e',
+                    }
+
+        # Get URL's
+        self.list_url = reverse("register-list")
+
+    def test_registration_create(self):
+        response = self.client.post("/api/v1/register/", self.user)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data['username'], 'Orson_Wells')
+        self.assertEqual(response.data['response'], 'Registration Successful')
+        self.assertEqual(response.data['token'], Token.objects.last().key)
+
