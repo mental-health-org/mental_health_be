@@ -58,3 +58,8 @@ class TestRegisterViewSets(TestCase):
         self.assertEqual(response.data['response'], 'Registration Successful')
         self.assertEqual(response.data['token'], Token.objects.last().key)
 
+    def test_registration_create_400(self):
+
+        response = self.client.post("/api/v1/register/",{"invalid": 2})
+        self.assertEqual(response.status_code, 400)
+
