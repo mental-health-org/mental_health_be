@@ -89,3 +89,33 @@ class TestLoginViewSets(TestCase):
         self.assertEqual(response.data['response'], 'Successful Login')
         self.assertEqual(response.data['token'], Token.objects.last().key)
 
+class TestLogoutViewSets(TestCase):
+    def setUp(self):
+        # Create Objects
+        self.user = {
+                    "username" : 'Orson_Wells',
+                    "email" : 'test@email.com',
+                    "password" : '1a2b3c4d5e',
+                    "password2" :'1a2b3c4d5e',
+                    }
+        self.login = {
+                    "username" : 'Orson_Wells',
+                    "password" : '1a2b3c4d5e'
+                    }
+        self.logout = {
+                    "username" : 'Orson_Wells',
+                    }
+        # Get URL's
+        self.register_url = reverse("register-list")
+        self.login_url = reverse("login-list")
+        self.logout_url = reverse("logout-list")
+
+
+    def test_user_logout(self):
+
+        self.client.post(self.register_url, self.user)
+        self.client.post(self.login_url, self.login)
+        response = self.client.post(self.logout_url, self.logout)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['response'], 'Successfully Logged Out')
