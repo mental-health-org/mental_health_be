@@ -70,3 +70,15 @@ class User(AbstractBaseUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+class Connection(models.Model):
+    class Status(models.IntegerChoices):
+        PENDING = 0, "pending"
+        CONNECTED = 1, "connected"
+        DISCONNECTED = 2, "disconnected"
+
+    user_sent = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_sent', default=None, blank=True, on_delete=models.CASCADE)
+    user_received = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_received', default=None, blank=True, on_delete=models.CASCADE)
+    status = models.PositiveSmallIntegerField(choices=Status.choices, default=Status.PENDING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
