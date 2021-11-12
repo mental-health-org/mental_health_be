@@ -174,3 +174,10 @@ class TestConnectionViewSets(TestCase):
         self.assertEqual(Connection.objects.last().user_received, self.user2)
         self.assertEqual(Connection.objects.last().status, 0)
 
+    def test_accepting_connection_request(self):
+        self.client.post(self.list_url, self.send_request)
+        response = self.client.post(self.list_url, self.accept_request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Connection.objects.last().user_sent, self.user)
+        self.assertEqual(Connection.objects.last().user_received, self.user2)
+        self.assertEqual(Connection.objects.last().status, 1)
