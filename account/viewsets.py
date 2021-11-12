@@ -39,6 +39,7 @@ class RegisterViewSet(viewsets.ViewSet):
         serializer = RegistrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+
         data['response'] = "Registration Successful"
         data['id'] = user.id
         data['username'] = user.username
@@ -68,3 +69,17 @@ class LogoutViewSet(viewsets.ViewSet):
         data['response'] = "Successfully Logged Out"
         logout(request)
         return FinalResponse(data, status=status.HTTP_200_OK)
+
+class ConnectionViewSet(viewsets.ViewSet):
+
+    def create(self, request):
+        sent = User.objects.get(id=request.data["user_sent"])
+        received = User.objects.get(id=request.data["user_received"])
+
+        connection = Connection.objects.filter(user_sent = sent.id, user_received = received.id)
+        if connection.first() == None:
+            Connection.objects.create(user_sent = sent, user_received = received, status = 0)
+            return FinalResponse("Connection Requested", status=status.HTTP_201_CREATED)
+
+        connection.update(status = request.data["status"])
+        return FinalResponse("Connection Made", status=status.HTTP_200_OK)
