@@ -44,6 +44,7 @@ class TestRegisterViewSets(TestCase):
         self.user = {
                     "username" : 'Orson_Wells',
                     "email" : 'test@email.com',
+                    "title" : 'profession',
                     "password" : '1a2b3c4d5e',
                     "password2" :'1a2b3c4d5e',
                     }
@@ -69,11 +70,12 @@ class TestLoginViewSets(TestCase):
         self.user = {
                     "username" : 'Orson_Wells',
                     "email" : 'test@email.com',
+                    "title" : 'profession',
                     "password" : '1a2b3c4d5e',
                     "password2" :'1a2b3c4d5e',
                     }
         self.login = {
-                    "username" : 'Orson_Wells',
+                    "username" : 'test@email.com',
                     "password" : '1a2b3c4d5e'
                     }
         # Get URL's
@@ -95,11 +97,12 @@ class TestLogoutViewSets(TestCase):
         self.user = {
                     "username" : 'Orson_Wells',
                     "email" : 'test@email.com',
+                    "title" : 'profession',
                     "password" : '1a2b3c4d5e',
                     "password2" :'1a2b3c4d5e',
                     }
         self.login = {
-                    "username" : 'Orson_Wells',
+                    "username" : 'test@email.com',
                     "password" : '1a2b3c4d5e'
                     }
         self.logout = {
@@ -119,3 +122,67 @@ class TestLogoutViewSets(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['response'], 'Successfully Logged Out')
+
+class TestConnectionViewSets(TestCase):
+    def setUp(self):
+        # Create Objects
+        self.user = User.objects.create(username = 'Orson_Wells',
+                                        email = 'test@email.com',
+                                        title = 'counselor',
+                                        password = '1a2b3c4d5e',
+                                        )
+        self.user2 = User.objects.create(username = 'Tommy_Wiseau',
+                                        email = 'test2@email.com',
+                                        title = 'counselor',
+                                        password = '1a2b3c4d5e',
+                                        )
+        self.user3 = User.objects.create(username = 'Third_User',
+                                        email = 'test3@email.com',
+                                        title = 'counselor',
+                                        password = '1a2b3c4d5e',
+                                        )
+        self.user4 = User.objects.create(username = 'Fourth_User',
+                                        email = 'test4@email.com',
+                                        title = 'counselor',
+                                        password = '1a2b3c4d5e',
+                                        )
+        self.connection1 = Connection.objects.create(
+                                                    user_sent = self.user3,
+                                                    user_received = self.user4,
+                                                    status = 0,
+                                                    )
+        # Payloads
+        self.send_request = {
+                            "user_sent" : str(self.user.id),
+                            "user_received" : str(self.user2.id),
+                            "status" : "0"
+                            }
+
+        self.accept_request = {
+                            "user_sent" : str(self.user.id),
+                            "user_received" : str(self.user2.id),
+                            "status" : "1"
+                            }
+        # Get URL's
+        self.list_url = reverse("connections-list")
+        self.detail_url = reverse("connections-detail", args={self.connection1.id})
+
+    def test_sending_connection_request(self):
+        response = self.client.post(self.list_url, self.send_request)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(Connection.objects.last().user_sent, self.user)
+        self.assertEqual(Connection.objects.last().user_received, self.user2)
+        self.assertEqual(Connection.objects.last().status, 0)
+
+    def test_accepting_connection_request(self):
+        self.client.post(self.list_url, self.send_request)
+        response = self.client.post(self.list_url, self.accept_request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Connection.objects.last().user_sent, self.user)
+        self.assertEqual(Connection.objects.last().user_received, self.user2)
+        self.assertEqual(Connection.objects.last().status, 1)
+
+    def test_remove_connection(self):
+        response = self.client.delete(self.detail_url)
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(Connection.objects.all().count(), 0)
