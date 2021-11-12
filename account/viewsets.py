@@ -83,3 +83,11 @@ class ConnectionViewSet(viewsets.ViewSet):
 
         connection.update(status = request.data["status"])
         return FinalResponse("Connection Made", status=status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = Connection.objects.filter(id=self.kwargs['pk'])
+        self.perform_destroy(instance)
+        return FinalResponse(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
