@@ -167,3 +167,10 @@ class TestConnectionViewSets(TestCase):
         self.list_url = reverse("connections-list")
         self.detail_url = reverse("connections-detail", args={self.connection1.id})
 
+    def test_sending_connection_request(self):
+        response = self.client.post(self.list_url, self.send_request)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(Connection.objects.last().user_sent, self.user)
+        self.assertEqual(Connection.objects.last().user_received, self.user2)
+        self.assertEqual(Connection.objects.last().status, 0)
+
