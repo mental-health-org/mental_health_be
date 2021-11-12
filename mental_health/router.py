@@ -11,6 +11,8 @@ router.register(r'rvote', ResponseVoteViewSet, basename='rvote')
 
 router.register(r'tags', TagsViewSet, basename='tags')
 
+router.register(r'connections', ConnectionViewSet, basename='connections')
+
 router.register(r'users', UsersViewSet, basename='users')
 router.register(r'register', RegisterViewSet, basename='register')
 router.register(r'login', LoginViewSet, basename='login')
