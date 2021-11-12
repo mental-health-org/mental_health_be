@@ -181,3 +181,8 @@ class TestConnectionViewSets(TestCase):
         self.assertEqual(Connection.objects.last().user_sent, self.user)
         self.assertEqual(Connection.objects.last().user_received, self.user2)
         self.assertEqual(Connection.objects.last().status, 1)
+
+    def test_remove_connection(self):
+        response = self.client.delete(self.detail_url)
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(Connection.objects.all().count(), 0)
