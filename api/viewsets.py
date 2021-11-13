@@ -153,3 +153,9 @@ class QuestionFlagViewSet(viewsets.ViewSet):
         # else:
         #     raise Http404
 
+    def retrieve(self, request, pk=None):
+        queryset = QuestionFlag.objects.all()
+        flagged_question = get_object_or_404(queryset, pk=pk)
+        serializer = DetailedQuestionFlagSerializer(flagged_question)
+        return FinalResponse(serializer.data)
+
