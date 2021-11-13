@@ -194,3 +194,20 @@ class QuestionFlagViewSet(viewsets.ViewSet):
     def perform_destroy(self, instance):
         instance.delete()
 
+    def create(self, request):
+        instance = QuestionFlag.objects.filter(post=request.data['post']).first()
+
+        if instance == None:
+            serializer = QuestionFlagSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        else:
+            new_data = request.data.copy()
+            new_data.update({'status' : instance.status})
+            serializer = QuestionFlagSerializer(data=new_data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+
+        return FinalResponse(serializer.data, status=status.HTTP_201_CREATED)
+
+
