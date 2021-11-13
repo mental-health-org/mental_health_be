@@ -221,3 +221,9 @@ class ResponseFlagViewSet(viewsets.ViewSet):
             # else:
             #     raise Http404
 
+        def retrieve(self, request, pk=None):
+            queryset = ResponseFlag.objects.all()
+            flagged_response = get_object_or_404(queryset, pk=pk)
+            serializer = DetailedResponseFlagSerializer(flagged_response)
+            return FinalResponse(serializer.data)
+
