@@ -1,5 +1,6 @@
 from .models import *
 from account.models import *
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .serializers import *
@@ -141,3 +142,14 @@ class ResponseVoteViewSet(viewsets.ViewSet):
 
         vote.update(vote_type = int(request.data["vote_type"]))
         return FinalResponse("vote updated", status=status.HTTP_201_CREATED)
+
+class QuestionFlagViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        # if request.user.is_superuser:
+        queryset = QuestionFlag.objects.all().distinct('post')
+        serializer = ListQuestionFlagSerializer(queryset, many=True)
+        return FinalResponse(serializer.data)
+        # else:
+        #     raise Http404
+
