@@ -262,3 +262,18 @@ class ResponseFlagViewSet(viewsets.ViewSet):
         def perform_destroy(self, instance):
             instance.delete()
 
+        def create(self, request):
+            instance = ResponseFlag.objects.filter(response=request.data['response']).first()
+
+            if instance == None:
+                serializer = ResponseFlagSerializer(data=request.data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+            else:
+                new_data = request.data.copy()
+                new_data.update({'status' : instance.status})
+                serializer = ResponseFlagSerializer(data=new_data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+
+            return FinalResponse(serializer.data, status=status.HTTP_201_CREATED)
