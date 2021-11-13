@@ -19,6 +19,11 @@ class TestPostCase(TestCase):
         expect_representation_post = '{}'.format(self.post.title)
         self.assertEqual(expect_representation_post, str(self.post))
 
+    def test_responses(self):
+        self.assertEqual(1, Post.objects.count())
+        self.assertEqual(self.post.quarantine, False)
+        self.assertEqual(self.post.body, Post.objects.first().body)
+
 class TestTagCase(TestCase):
 
     def setUp(self):
@@ -46,7 +51,7 @@ class TestTaggingCase(TestCase):
         self.post.tagging.add(self.tag)
 
     def test_tagging(self):
-        self.assertEqual(1, self.post.tagging.all().count())
+        self.assertEqual(1, self.post.tagging.count())
         self.assertEqual(self.tag, self.post.tagging.first())
 
 class TestResponseCase(TestCase):
@@ -58,6 +63,7 @@ class TestResponseCase(TestCase):
 
     def test_responses(self):
         self.assertEqual(2, self.post.response_set.all().count())
+        self.assertEqual(self.response1.quarantine, False)
         self.assertEqual(self.response1.body, self.post.response_set.first().body)
 
 class TestQuestionVoteCase(TestCase):
@@ -71,6 +77,7 @@ class TestQuestionVoteCase(TestCase):
 
     def test_questions_vote(self):
         self.assertEqual(2, self.post.votes.count())
+
 
 class TestResponseVoteCase(TestCase):
 
