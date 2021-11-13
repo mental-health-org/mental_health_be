@@ -227,3 +227,22 @@ class ResponseFlagViewSet(viewsets.ViewSet):
             serializer = DetailedResponseFlagSerializer(flagged_response)
             return FinalResponse(serializer.data)
 
+        def partial_update(self, request, pk=None):
+            rflag = ResponseFlag.objects.get(id = pk)
+            queryset = ResponseFlag.objects.filter(response=rflag.response.id)
+
+            for flag in queryset:
+                flag.status = request.data['status']
+                flag.save()
+
+            if request.data['status'] == 0 | 1:
+                obj = Response.objects.get(id=rflag.response.id)
+                obj.quarantine = False
+                obj.save()
+            else:
+                obj = Response.objects.get(id=rflag.response.id)
+                obj.quarantine = True
+                obj.save()
+
+            return FinalResponse({"update":"Response and related flags have been updated"},status=status.HTTP_200_OK)
+
