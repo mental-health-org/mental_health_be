@@ -246,3 +246,19 @@ class ResponseFlagViewSet(viewsets.ViewSet):
 
             return FinalResponse({"update":"Response and related flags have been updated"},status=status.HTTP_200_OK)
 
+        def destroy(self, request, *args, **kwargs):
+            rflag = ResponseFlag.objects.get(id = self.kwargs['pk'])
+            queryset = ResponseFlag.objects.filter(response=rflag.response.id)
+
+            if rflag.status == 2:
+                response = Response.objects.get(id = rflag.response.id)
+                self.perform_destroy(response)
+
+            for flag in queryset:
+                self.perform_destroy(flag)
+
+            return FinalResponse(status=status.HTTP_204_NO_CONTENT)
+
+        def perform_destroy(self, instance):
+            instance.delete()
+
