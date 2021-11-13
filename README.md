@@ -187,7 +187,7 @@ DELETE    | /users/:id/       | Delete a user                                  |
 
 
 ## Database Schema
-![HeLP Network Database Schema](/storage/images/schema.png)
+![HeLP Network Database Schema](/docs/storage/images/schema.png)
 
 
 ## Contributors

@@ -122,3 +122,60 @@ def tags_serializer(queryset):
 
 def header_serializer(type, attributes):
     return { 'id': None, 'type': type, 'attributes': attributes }
+
+class QuestionFlagSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = QuestionFlag
+        fields = ('__all__')
+
+class ListQuestionFlagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = QuestionFlag
+        fields = ('__all__')
+
+class DetailedQuestionFlagSerializer(serializers.ModelSerializer):
+    comments = serializers.SerializerMethodField()
+
+    def get_comments(self, obj):
+        comments = list()
+        all_flags = QuestionFlag.objects.filter(post = obj.post.id)
+        for flag in all_flags:
+            user = User.objects.filter(id = flag.user.id).first()
+            details = {"id" : flag.id, "user_id" : user.id, "username" : user.username ,"comment" : flag.comment}
+            comments.append(details)
+        return comments
+
+    class Meta:
+        model = QuestionFlag
+        fields = ('id', 'post', 'user', 'status','comments', 'created_at', 'updated_at')
+
+class ResponseFlagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ResponseFlag
+        fields = ('__all__')
+
+class DetailedResponseFlagSerializer(serializers.ModelSerializer):
+    comments = serializers.SerializerMethodField()
+
+    def get_comments(self, obj):
+        comments = list()
+        all_flags = ResponseFlag.objects.filter(response = obj.response.id)
+        for flag in all_flags:
+            user = User.objects.filter(id = flag.user.id).first()
+            details = {"id" : flag.id, "user_id" : user.id, "username" : user.username ,"comment" : flag.comment}
+            comments.append(details)
+        return comments
+
+    class Meta:
+        model = ResponseFlag
+        fields = ('id', 'response', 'user', 'status','comments', 'created_at', 'updated_at')
+
+class ListResponseFlagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ResponseFlag
+        fields = ('__all__')
