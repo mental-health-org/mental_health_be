@@ -222,3 +222,14 @@ class TestQuestionFlagVoteViewSet(TestCase):
         self.assertEqual(1, QuestionFlag.objects.count())
         self.assertEqual(201, response.status_code)
 
+    def test_question_flags_list(self):
+        self.post2 = Post.objects.create( user = self.user, title = 'Test Title', body = 'ipsum lorem')
+        qflag5 = QuestionFlag.objects.create(user = self.user, post = self.post2, comment = "this is a second post")
+
+        response = self.client.get(self.list_url)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.data[0]['post'], self.post.id)
+        self.assertEqual(response.data[0]['status'], 0)
+        self.assertEqual(response.data[1]['post'], self.post2.id)
+        self.assertEqual(response.data[1]['status'], 0)
+
