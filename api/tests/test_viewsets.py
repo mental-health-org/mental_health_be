@@ -247,3 +247,15 @@ class TestQuestionFlagVoteViewSet(TestCase):
         self.assertEqual(response.data['comments'][2]['comment'], self.qflag3.comment)
         self.assertEqual(response.data['comments'][3]['comment'], self.qflag4.comment)
 
+    def test_question_flags_update(self):
+        self.assertEqual(Post.objects.last().quarantine, False)
+        self.assertEqual(QuestionFlag.objects.all()[0].status, 0)
+        self.assertEqual(QuestionFlag.objects.all()[1].status, 0)
+        self.assertEqual(QuestionFlag.objects.all()[2].status, 0)
+
+        response = self.client.patch(self.detail_url, data={"status" : "2"}, content_type='application/json')
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(Post.objects.last().quarantine, True)
+        self.assertEqual(QuestionFlag.objects.all()[0].status, 2)
+        self.assertEqual(QuestionFlag.objects.all()[1].status, 2)
+        self.assertEqual(QuestionFlag.objects.all()[2].status, 2)
