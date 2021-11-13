@@ -152,3 +152,9 @@ class DetailedQuestionFlagSerializer(serializers.ModelSerializer):
         model = QuestionFlag
         fields = ('id', 'post', 'user', 'status','comments', 'created_at', 'updated_at')
 
+class ResponseFlagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ResponseFlag
+        fields = ('__all__')
+
