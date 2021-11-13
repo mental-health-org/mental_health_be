@@ -56,3 +56,17 @@ class ResponseVote(models.Model):
     vote_type = models.PositiveSmallIntegerField(choices=Vote.choices, default=Vote.NOVOTE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class QuestionFlag(models.Model):
+    class Status(models.IntegerChoices):
+        PENDING = 0, "pending"
+        SAFE = 1, "safe"
+        QUARANTINED = 2, "quarantined"
+
+    post = models.ForeignKey(Post, related_name='post_flag', default=None, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_flagging_post', default=None, blank=True, on_delete=models.CASCADE)
+    comment = models.TextField(max_length=1000)
+    status = models.PositiveSmallIntegerField(choices=Status.choices, default=Status.PENDING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
