@@ -174,3 +174,8 @@ class DetailedResponseFlagSerializer(serializers.ModelSerializer):
         model = ResponseFlag
         fields = ('id', 'response', 'user', 'status','comments', 'created_at', 'updated_at')
 
+class ListResponseFlagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ResponseFlag
+        fields = ('__all__')
