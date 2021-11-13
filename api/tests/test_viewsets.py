@@ -268,3 +268,15 @@ class TestQuestionFlagVoteViewSet(TestCase):
 
         self.assertEqual(QuestionFlag.objects.count(), 0)
         self.assertEqual(Post.objects.count(), 1)
+
+    def test_question_flags_delete_all(self):
+        self.assertEqual(QuestionFlag.objects.count(), 4)
+        self.assertEqual(Post.objects.count(), 1)
+
+        self.client.patch(self.detail_url, data={"status" : "2"}, content_type='application/json')
+        response = self.client.delete(self.detail_url)
+
+        self.assertEqual(QuestionFlag.objects.count(), 0)
+        self.assertEqual(Post.objects.count(), 0)
+
+
