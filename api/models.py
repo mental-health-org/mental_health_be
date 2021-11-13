@@ -16,6 +16,7 @@ class Post(models.Model):
     body = models.CharField(max_length = 5000, null=True, blank=True, default=None)
     votes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_post_vote', through='QuestionVotes')
     tagging = models.ManyToManyField(Tag, related_name='taggings', blank=True)
+    quarantine = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
@@ -27,6 +28,7 @@ class Response(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     body = models.TextField(max_length=5000)
     votes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_response_vote', through='ResponseVote')
+    quarantine = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
