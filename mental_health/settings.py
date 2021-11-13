@@ -27,7 +27,6 @@ ALLOWED_HOSTS = [
 ]
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,10 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    # 'allauth.socialaccount.providers.linkedin_oauth2',
     'corsheaders',
+    # Apps
     'account',
-    'api',
+    'questions',
+    'responses',
+    'tags',
     # oauth
     'oauth2_provider',
     'social_django',
@@ -88,8 +89,6 @@ AUTHENTICATION_BACKENDS = (
 # Linkedin configuration
 SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY'))
 SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'))
-
-
 
 # Linkedin Authentication Setting
 SOCIALACCOUNT_PROVIDERS = {
@@ -176,10 +175,8 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -211,7 +208,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
