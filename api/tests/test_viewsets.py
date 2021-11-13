@@ -129,11 +129,6 @@ class TestResponsesViewSets(TestCase):
         response = self.client.post("/api/v1/responses/",{"invalid": 2})
         self.assertEqual(response.status_code, 400)
 
-    # def test_response_create_404(self):
-    #
-    #     response = self.client.post("/api/v1/responses/",{"post": "1000", "body": "that post id does not exist"})
-    #     self.assertEqual(response.status_code, 404)
-
     def test_response_patch(self):
         old_body = Response.objects.last().body
         response = self.client.patch("/api/v1/responses/"+str(self.response3.id)+"/", data={"body": "patch"}, content_type='application/json')
@@ -168,11 +163,6 @@ class TestQuestionVoteViewSet(TestCase):
         self.assertEqual(1, len(QuestionVotes.objects.all()))
         self.assertEqual(3, QuestionVotes.objects.first().vote_type)
 
-    # def test_question_votes_create_403(self):
-    #
-    #     response = self.client.post("/api/v1/qvote/", {"user": , "post": str(self.post.id), "vote_type": "1"})
-    #     self.assertEqual(response.status_code, 403)
-
 class TestResponseVoteViewSet(TestCase):
 
     def setUp(self):
@@ -197,7 +187,3 @@ class TestResponseVoteViewSet(TestCase):
         self.assertEqual(1, len(ResponseVote.objects.all()))
         self.assertEqual(3, ResponseVote.objects.first().vote_type)
 
-    # def test_response_votes_create_403(self):
-    #
-    #     response = self.client.post("/api/v1/qvote/", {"response1": str(self.response1.id), "vote_type": "1"})
-    #     self.assertEqual(response.status_code, 403)
