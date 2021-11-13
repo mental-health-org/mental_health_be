@@ -114,3 +114,22 @@ class TestQuestionsFlagCase(TestCase):
         self.assertEqual(self.questionflag.status, 0)
         self.assertEqual(self.questionflag.comment, "This is not a relevent question")
 
+class TestResponseFlagCase(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(username = 'Orson_Wells',
+                                        email = 'test@email.com',
+                                        title = 'professional',
+                                        password = '1a2b3c4d5e',
+                                        )
+        self.post = Post.objects.create( user = self.user, title = 'Test Title', body = 'ipsum lorem')
+        self.response = Response.objects.create(user = self.user, post = self.post, body = 'ipsum lorem')
+
+        self.responseflag = ResponseFlag.objects.create(user = self.user, response = self.response, comment = "This is not a relevent response")
+
+    def test_response_flag(self):
+        self.assertEqual(1, ResponseFlag.objects.count())
+        self.assertEqual(self.responseflag.user, self.user)
+        self.assertEqual(self.responseflag.response, self.response)
+        self.assertEqual(self.responseflag.status, 0)
+        self.assertEqual(self.responseflag.comment, "This is not a relevent response")
