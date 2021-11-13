@@ -130,3 +130,9 @@ class QuestionFlagSerializer(serializers.ModelSerializer):
         model = QuestionFlag
         fields = ('__all__')
 
+class ListQuestionFlagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = QuestionFlag
+        fields = ('__all__')
+
