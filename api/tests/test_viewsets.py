@@ -259,3 +259,12 @@ class TestQuestionFlagVoteViewSet(TestCase):
         self.assertEqual(QuestionFlag.objects.all()[0].status, 2)
         self.assertEqual(QuestionFlag.objects.all()[1].status, 2)
         self.assertEqual(QuestionFlag.objects.all()[2].status, 2)
+
+    def test_question_flags_delete_only_qflags(self):
+        self.assertEqual(QuestionFlag.objects.count(), 4)
+        self.assertEqual(Post.objects.count(), 1)
+
+        response = self.client.delete(self.detail_url)
+
+        self.assertEqual(QuestionFlag.objects.count(), 0)
+        self.assertEqual(Post.objects.count(), 1)
