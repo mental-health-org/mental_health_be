@@ -178,3 +178,19 @@ class QuestionFlagViewSet(viewsets.ViewSet):
 
         return FinalResponse({"update":"Question and related flags have been updated"},status=status.HTTP_200_OK)
 
+    def destroy(self, request, *args, **kwargs):
+        qflag = QuestionFlag.objects.get(id = self.kwargs['pk'])
+        queryset = QuestionFlag.objects.filter(post=qflag.post.id)
+
+        if qflag.status == 2:
+            question = Post.objects.get(id = qflag.post.id)
+            self.perform_destroy(question)
+
+        for flag in queryset:
+            self.perform_destroy(flag)
+
+        return FinalResponse(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
