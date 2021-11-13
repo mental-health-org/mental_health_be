@@ -352,3 +352,13 @@ class TestResponseFlagVoteViewSet(TestCase):
         self.assertEqual(ResponseFlag.objects.all()[0].status, 2)
         self.assertEqual(ResponseFlag.objects.all()[1].status, 2)
         self.assertEqual(ResponseFlag.objects.all()[2].status, 2)
+
+    def test_response_flags_delete_only_rflags(self):
+        self.assertEqual(ResponseFlag.objects.count(), 4)
+        self.assertEqual(Response.objects.count(), 1)
+
+        response = self.client.delete(self.detail_url)
+
+        self.assertEqual(ResponseFlag.objects.count(), 0)
+        self.assertEqual(Response.objects.count(), 1)
+
