@@ -158,3 +158,19 @@ class ResponseFlagSerializer(serializers.ModelSerializer):
         model = ResponseFlag
         fields = ('__all__')
 
+class DetailedResponseFlagSerializer(serializers.ModelSerializer):
+    comments = serializers.SerializerMethodField()
+
+    def get_comments(self, obj):
+        comments = list()
+        all_flags = ResponseFlag.objects.filter(response = obj.response.id)
+        for flag in all_flags:
+            user = User.objects.filter(id = flag.user.id).first()
+            details = {"id" : flag.id, "user_id" : user.id, "username" : user.username ,"comment" : flag.comment}
+            comments.append(details)
+        return comments
+
+    class Meta:
+        model = ResponseFlag
+        fields = ('id', 'response', 'user', 'status','comments', 'created_at', 'updated_at')
+
