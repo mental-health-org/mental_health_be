@@ -1,5 +1,5 @@
 from django.test import TestCase
-from api.models import *
+from tags.models import *
 from account.models import *
 from django.urls import reverse
 from django.test.client import RequestFactory

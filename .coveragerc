@@ -1,4 +1,6 @@
 [run]
 source =
-    api
+    tags
     account
+    questions
+    responses
