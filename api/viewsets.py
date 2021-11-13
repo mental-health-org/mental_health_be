@@ -211,3 +211,13 @@ class QuestionFlagViewSet(viewsets.ViewSet):
         return FinalResponse(serializer.data, status=status.HTTP_201_CREATED)
 
 
+class ResponseFlagViewSet(viewsets.ViewSet):
+
+        def list(self, request):
+            # if request.user.is_superuser:
+            queryset = ResponseFlag.objects.all().distinct('response')
+            serializer = ListResponseFlagSerializer(queryset, many=True)
+            return FinalResponse(serializer.data)
+            # else:
+            #     raise Http404
+
