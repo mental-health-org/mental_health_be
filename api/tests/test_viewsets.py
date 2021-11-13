@@ -315,3 +315,13 @@ class TestResponseFlagVoteViewSet(TestCase):
         self.assertEqual(1, ResponseFlag.objects.count())
         self.assertEqual(201, response.status_code)
 
+    def test_response_flags_list(self):
+        self.response2 = Response.objects.create( user = self.user, post = self.post, body = 'ipsum lorem')
+        rflag5 = ResponseFlag.objects.create(user = self.user, response = self.response2, comment = "this is a second response")
+
+        response = self.client.get(self.list_url)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.data[0]['response'], self.response.id)
+        self.assertEqual(response.data[0]['status'], 0)
+        self.assertEqual(response.data[1]['response'], self.response2.id)
+        self.assertEqual(response.data[1]['status'], 0)
