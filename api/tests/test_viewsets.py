@@ -233,3 +233,17 @@ class TestQuestionFlagVoteViewSet(TestCase):
         self.assertEqual(response.data[1]['post'], self.post2.id)
         self.assertEqual(response.data[1]['status'], 0)
 
+    def test_question_flags_detail(self):
+        response = self.client.get(self.detail_url)
+        self.assertEqual(200, response.status_code)
+
+        self.assertEqual(response.data['comments'][0]['user_id'], self.user.id)
+        self.assertEqual(response.data['comments'][1]['user_id'], self.user2.id)
+        self.assertEqual(response.data['comments'][2]['user_id'], self.user3.id)
+        self.assertEqual(response.data['comments'][3]['user_id'], self.user4.id)
+
+        self.assertEqual(response.data['comments'][0]['comment'], self.qflag.comment)
+        self.assertEqual(response.data['comments'][1]['comment'], self.qflag2.comment)
+        self.assertEqual(response.data['comments'][2]['comment'], self.qflag3.comment)
+        self.assertEqual(response.data['comments'][3]['comment'], self.qflag4.comment)
+
