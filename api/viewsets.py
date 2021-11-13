@@ -159,3 +159,22 @@ class QuestionFlagViewSet(viewsets.ViewSet):
         serializer = DetailedQuestionFlagSerializer(flagged_question)
         return FinalResponse(serializer.data)
 
+    def partial_update(self, request, pk=None):
+        qflag = QuestionFlag.objects.get(id = pk)
+        queryset = QuestionFlag.objects.filter(post=qflag.post.id)
+
+        for flag in queryset:
+            flag.status = request.data['status']
+            flag.save()
+
+        if request.data['status'] == 0 | 1:
+            obj = Post.objects.get(id=qflag.post.id)
+            obj.quarantine = False
+            obj.save()
+        else:
+            obj = Post.objects.get(id=qflag.post.id)
+            obj.quarantine = True
+            obj.save()
+
+        return FinalResponse({"update":"Question and related flags have been updated"},status=status.HTTP_200_OK)
+
