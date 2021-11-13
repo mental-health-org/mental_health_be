@@ -187,3 +187,27 @@ class TestResponseVoteViewSet(TestCase):
         self.assertEqual(1, len(ResponseVote.objects.all()))
         self.assertEqual(3, ResponseVote.objects.first().vote_type)
 
+class TestQuestionFlagVoteViewSet(TestCase):
+
+    def setUp(self):
+        # Create Objects
+        self.user = User.objects.create(username = 'Orson Wells')
+        self.admin_user = User.objects.create(username = 'Admin', password = 'password', email = 'admin@admin.email', is_admin = True)
+        self.post = Post.objects.create( user = self.user, title = 'Test Title', body = 'ipsum lorem')
+        self.qflag = QuestionFlag.objects.create(user = self.user, post = self.post, comment = "bad post")
+
+        self.user2 = User.objects.create(username = 'Second_User', email = '1@email.com')
+        self.user3 = User.objects.create(username = 'Third_User', email = '2@email.com')
+        self.user4 = User.objects.create(username = 'Fourth_User', email = '3@email.com')
+
+        self.qflag2 = QuestionFlag.objects.create(user = self.user2, post = self.post, comment = "second comment")
+        self.qflag3 = QuestionFlag.objects.create(user = self.user3, post = self.post, comment = "third comment")
+        self.qflag4 = QuestionFlag.objects.create(user = self.user4, post = self.post, comment = "fourth comment")
+
+
+        # Get URL's
+        self.list_url = reverse('qflag-list')
+        self.detail_url = reverse('qflag-detail', args = {str(self.qflag.id)})
+
+        self.request_factory = RequestFactory()
+
