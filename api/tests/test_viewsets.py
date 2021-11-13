@@ -309,3 +309,9 @@ class TestResponseFlagVoteViewSet(TestCase):
         self.assertEqual(5, ResponseFlag.objects.count())
         self.assertEqual(201, response.status_code)
 
+    def test_response_flags_create_no_starting_items(self):
+        ResponseFlag.objects.all().delete()
+        response = self.client.post(self.list_url, {"user": str(self.user.id), "response": str(self.response.id), "comment": "bad response"})
+        self.assertEqual(1, ResponseFlag.objects.count())
+        self.assertEqual(201, response.status_code)
+
