@@ -211,3 +211,8 @@ class TestQuestionFlagVoteViewSet(TestCase):
 
         self.request_factory = RequestFactory()
 
+    def test_question_flags_create(self):
+        response = self.client.post(self.list_url, {"user": str(self.user.id), "post": str(self.post.id), "comment": "bad post"})
+        self.assertEqual(5, QuestionFlag.objects.count())
+        self.assertEqual(201, response.status_code)
+
