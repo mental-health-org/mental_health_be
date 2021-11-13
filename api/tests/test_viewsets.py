@@ -340,3 +340,15 @@ class TestResponseFlagVoteViewSet(TestCase):
         self.assertEqual(response.data['comments'][2]['comment'], self.rflag3.comment)
         self.assertEqual(response.data['comments'][3]['comment'], self.rflag4.comment)
 
+    def test_response_flags_update(self):
+        self.assertEqual(Response.objects.last().quarantine, False)
+        self.assertEqual(ResponseFlag.objects.all()[0].status, 0)
+        self.assertEqual(ResponseFlag.objects.all()[1].status, 0)
+        self.assertEqual(ResponseFlag.objects.all()[2].status, 0)
+
+        response = self.client.patch(self.detail_url, data={"status" : "2"}, content_type='application/json')
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(Response.objects.last().quarantine, True)
+        self.assertEqual(ResponseFlag.objects.all()[0].status, 2)
+        self.assertEqual(ResponseFlag.objects.all()[1].status, 2)
+        self.assertEqual(ResponseFlag.objects.all()[2].status, 2)
