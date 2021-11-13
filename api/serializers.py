@@ -122,3 +122,11 @@ def tags_serializer(queryset):
 
 def header_serializer(type, attributes):
     return { 'id': None, 'type': type, 'attributes': attributes }
+
+class QuestionFlagSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = QuestionFlag
+        fields = ('__all__')
+
