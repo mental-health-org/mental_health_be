@@ -136,3 +136,19 @@ class ListQuestionFlagSerializer(serializers.ModelSerializer):
         model = QuestionFlag
         fields = ('__all__')
 
+class DetailedQuestionFlagSerializer(serializers.ModelSerializer):
+    comments = serializers.SerializerMethodField()
+
+    def get_comments(self, obj):
+        comments = list()
+        all_flags = QuestionFlag.objects.filter(post = obj.post.id)
+        for flag in all_flags:
+            user = User.objects.filter(id = flag.user.id).first()
+            details = {"id" : flag.id, "user_id" : user.id, "username" : user.username ,"comment" : flag.comment}
+            comments.append(details)
+        return comments
+
+    class Meta:
+        model = QuestionFlag
+        fields = ('id', 'post', 'user', 'status','comments', 'created_at', 'updated_at')
+
