@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 
 from django.conf import settings
 from django.db.models.signals import post_save
@@ -38,7 +39,7 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=True)
     title = models.CharField(max_length=50, null=True)
     email = models.EmailField(max_length=255, unique=True)
