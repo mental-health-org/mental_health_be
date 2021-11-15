@@ -18,7 +18,7 @@ class MyAccountManager(BaseUserManager):
             raise ValueError("Users must have a title")
         user = self.model(
             username=username,
-            email=self.normailze_email(email),
+            email= self.normalize_email(email),
             title=title,
         )
 
@@ -29,7 +29,7 @@ class MyAccountManager(BaseUserManager):
     def create_superuser(self, username, email, title, password):
         user = self.create_user(
             username=username,
-            email=self.normailze_email(email),
+            email=self.normalize_email(email),
             title=title,
             password=password,
         )
