@@ -1,8 +1,9 @@
 from tags.viewsets import *
-from account.viewsets import *
+from accounts.viewsets import *
 from questions.viewsets import *
 from responses.viewsets import *
 from rest_framework import routers
+from django.contrib.auth import views as auth_views
 
 router = routers.DefaultRouter()
 

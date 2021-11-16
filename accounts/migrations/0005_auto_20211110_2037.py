@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0004_alter_user_email'),
+        ('accounts', '0004_alter_user_email'),
     ]
 
     operations = [
@@ -26,6 +26,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='connections',
-            field=models.ManyToManyField(related_name='user_connection', through='account.Connection', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(related_name='user_connection', through='accounts.Connection', to=settings.AUTH_USER_MODEL),
         ),
     ]

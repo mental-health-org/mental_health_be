@@ -91,3 +91,22 @@ class ConnectionViewSet(viewsets.ViewSet):
 
     def perform_destroy(self, instance):
         instance.delete()
+
+# class AccountAuthBackend(object):
+#
+#     @staticmethod
+#     def authenticate(email=None, password=None):
+#         import pdb; pdb.set_trace()
+#         try:
+#             user = User.objects.get(email=email)
+#             if user.check_password(password):
+#                 return user
+#         except User.DoesNotExist:
+#             return None
+#
+#     @staticmethod
+#     def get_user(id_):
+#         try:
+#             return User.objects.get(pk=id_)
+#         except User.DoesNotExist:
+#             return None

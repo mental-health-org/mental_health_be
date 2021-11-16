@@ -2,7 +2,7 @@ from django.core import serializers as core_serializers
 from rest_framework import serializers
 from questions.models import *
 from responses.models import *
-from account.models import *
+from accounts.models import *
 
 class QuestionsSerializer(serializers.ModelSerializer):
     tagging = serializers.SerializerMethodField()

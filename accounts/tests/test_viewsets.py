@@ -1,9 +1,8 @@
-from django.test import TestCase
-from tags.models import *
-from account.models import *
-from django.urls import reverse
 from django.test.client import RequestFactory
-import json
+from django.test import TestCase
+from django.urls import reverse
+from tags.models import *
+from accounts.models import *
 
 class TestUsersViewSets(TestCase):
     def setUp(self):

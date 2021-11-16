@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'corsheaders',
     # Apps
-    'account',
+    'accounts',
     'questions',
     'responses',
     'tags',
@@ -75,7 +75,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 AUTHENTICATION_BACKENDS = (
     # Linkedin OAuth2
