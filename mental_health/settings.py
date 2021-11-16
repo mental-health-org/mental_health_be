@@ -36,12 +36,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'corsheaders',
+    'django.contrib.sites',
+    'django_rename_app',
     # Apps
     'accounts',
     'questions',
     'responses',
     'tags',
     # oauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.linkedin_oauth2',
+    # Other Oauth ATTEMPTS
     'oauth2_provider',
     'social_django',
     'drf_social_oauth2',
@@ -76,14 +83,15 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'accounts.User'
+SITE_ID = 2
 
 AUTHENTICATION_BACKENDS = (
+    # Django
+    'django.contrib.auth.backends.ModelBackend',
     # Linkedin OAuth2
     'social_core.backends.linkedin.LinkedinOAuth2',
     # drf_social_oauth2
     'drf_social_oauth2.backends.DjangoOAuth2',
-    # Django
-    'django.contrib.auth.backends.ModelBackend',
 )
 
 # Linkedin configuration
@@ -153,6 +161,11 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                # Required by allauth template tags
+                # "django.core.context_processors.request",
+                # allauth specific context processors
+                # "allauth.account.context_processors.account",
+                # "allauth.socialaccount.context_processors.socialaccount",
             ],
         },
     },
@@ -174,6 +187,13 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
