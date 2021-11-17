@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'corsheaders',
     'django.contrib.sites',
-    'django_rename_app',
+    'rest_auth',
     # Apps
     'accounts',
     'questions',
@@ -49,9 +49,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.linkedin_oauth2',
     # Other Oauth ATTEMPTS
+
     'oauth2_provider',
     'social_django',
-    'drf_social_oauth2',
+    # 'drf_social_oauth2',
+
     # Third Party Dependencies
     'rest_framework',
     'rest_framework.authtoken',
@@ -78,7 +80,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
-        'drf_social_oauth2.authentication.SocialAuthentication',
+
+        # 'drf_social_oauth2.authentication.SocialAuthentication',
     ],
 }
 
@@ -91,7 +94,7 @@ AUTHENTICATION_BACKENDS = (
     # Linkedin OAuth2
     'social_core.backends.linkedin.LinkedinOAuth2',
     # drf_social_oauth2
-    'drf_social_oauth2.backends.DjangoOAuth2',
+    # 'drf_social_oauth2.backends.DjangoOAuth2',
 )
 
 # Linkedin configuration
@@ -99,8 +102,29 @@ SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY
 SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'))
 
 # Linkedin Authentication Setting
+# SOCIALACCOUNT_PROVIDERS = {
+#     'linkedin': {
+#         'SCOPE': [
+#             'r_basicprofile',
+#             'r_emailaddress'
+#         ],
+#         'PROFILE_FIELDS': [
+#             'id',
+#             'first-name',
+#             'last-name',
+#             'email-address',
+#             'picture-url',
+#             'public-profile-url',
+#         ]
+#     }
+# }
+
 SOCIALACCOUNT_PROVIDERS = {
     'linkedin': {
+        'APP': {
+            'client_id': os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY'),
+            'client_secret': os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'),
+        },
         'SCOPE': [
             'r_basicprofile',
             'r_emailaddress'
@@ -159,8 +183,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+
                 # Required by allauth template tags
                 # "django.core.context_processors.request",
                 # allauth specific context processors
@@ -172,7 +198,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mental_health.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -214,7 +239,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

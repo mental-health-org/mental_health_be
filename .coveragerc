@@ -1,6 +1,6 @@
 [run]
 source =
     tags
-    account
+    accounts
     questions
     responses
