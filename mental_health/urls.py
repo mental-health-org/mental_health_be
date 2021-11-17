@@ -17,7 +17,7 @@ urlpatterns = [
 
     path('linkedin/connect/', LinkedInConnect.as_view(), name='linkedin_connect'),
     path('auth/login/', linkedin_views.oauth2_login, name='linkedin_login'),
-    path('auth/login/callback', linkedin_callback, name='linkedin_callback'),
+    path('auth/login/callback/', linkedin_callback, name='linkedin_callback'),
     # API Route Version Control
     path('api/v1/', include(router.urls)),
     # Custom Routes
