@@ -3,6 +3,8 @@ from django.test.client import RequestFactory
 from django.test import TestCase
 from questions.models import *
 from django.urls import reverse
+from django.test import Client
+from accounts.models import *
 
 User = get_user_model()
 
