@@ -171,7 +171,7 @@ CORS_ALLOW_HEADERS = [
 ]
 
 ROOT_URLCONF = 'mental_health.urls'
-# LOGIN_REDIRECT_URL = 'https://mental-health-fe.herokuapp.com'
+LOGIN_REDIRECT_URL = 'https://mental-health-fe.herokuapp'
 
 TEMPLATES = [
     {
