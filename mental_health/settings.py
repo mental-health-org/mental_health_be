@@ -171,6 +171,7 @@ CORS_ALLOW_HEADERS = [
 ]
 
 ROOT_URLCONF = 'mental_health.urls'
+LOGIN_REDIRECT_URL = 'https://mental-health-fe.herokuapp'
 
 TEMPLATES = [
     {
@@ -197,7 +198,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mental_health.wsgi.application'
+WSGI_APPLICATION = 'mental_health.wsgi.application.com'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
