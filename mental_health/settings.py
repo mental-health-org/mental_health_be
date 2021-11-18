@@ -119,6 +119,11 @@ SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_
 #     }
 # }
 
+# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'https://localhost:8000/auth/linkedin/callback/'
+# LOGIN_REDIRECT_URL = 'http://localhost:8000/auth/linkedin/callback/'
+LOGIN_REDIRECT_URL = 'https://developer-mental-health-org.herokuapp.com/auth/linkedin/callback/'
+
+
 SOCIALACCOUNT_PROVIDERS = {
     'linkedin_oauth2': {
         # 'APP': {
@@ -126,7 +131,7 @@ SOCIALACCOUNT_PROVIDERS = {
         #     'client_secret': os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'),
         # },
         'SCOPE': [
-            'r_basicprofile',
+            'r_liteprofile',
             'r_emailaddress'
         ],
         'PROFILE_FIELDS': [
@@ -134,9 +139,9 @@ SOCIALACCOUNT_PROVIDERS = {
             'first-name',
             'last-name',
             'email-address',
-            'headline',
-            'positions',
-            'industry',
+            # 'headline',
+            # 'positions',
+            # 'industry',
         ]
     }
 }
@@ -173,7 +178,7 @@ CORS_ALLOW_HEADERS = [
 
 ROOT_URLCONF = 'mental_health.urls'
 # LOGIN_REDIRECT_URL = 'https://mental-health-fe.herokuapp.com'
-LOGIN_REDIRECT_URL = 'https://developer-mental-health-org.herokuapp.com/auth/linkedin/'
+# LOGIN_REDIRECT_URL = 'https://developer-mental-health-org.herokuapp.com/auth/linkedin/'
 
 
 TEMPLATES = [
@@ -201,7 +206,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mental_health.wsgi.application.com'
+WSGI_APPLICATION = 'mental_health.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
