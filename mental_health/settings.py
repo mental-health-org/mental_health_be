@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'corsheaders',
     'django.contrib.sites',
-    'rest_auth',
     # Apps
     'accounts',
     'questions',
@@ -48,8 +47,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.linkedin_oauth2',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
     # Third Party Dependencies
-    'social_django',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -81,10 +81,8 @@ AUTH_USER_MODEL = 'accounts.User'
 SITE_ID = 2
 
 AUTHENTICATION_BACKENDS = (
-    # Django
+    'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
-    # Linkedin OAuth2
-    'social_core.backends.linkedin.LinkedinOAuth2',
 )
 
 # Linkedin configuration
@@ -93,8 +91,10 @@ SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_
 
 # ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'https://localhost:8000/auth/linkedin/callback/'
 # LOGIN_REDIRECT_URL = 'http://localhost:8000/auth/linkedin/callback/'
-LOGIN_REDIRECT_URL = 'https://developer-mental-health-org.herokuapp.com/auth/linkedin/callback/'
+# LOGIN_REDIRECT_URL = 'https://developer-mental-health-org.herokuapp.com/auth/linkedin/callback/'
 
+# ACCOUNT_ADAPTER = 'accounts.views.UserAccountAdapter'
+# SOCIALACCOUNT_ADAPTER = 'accounts.views.UserAccountAdapter'
 
 SOCIALACCOUNT_PROVIDERS = {
     'linkedin_oauth2': {
@@ -154,9 +154,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
             ],
         },
     },
