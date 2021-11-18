@@ -12,11 +12,12 @@ urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
     #Oauth
-    path('accounts/', include('allauth.urls')),
-    path('auth/', include('rest_auth.urls')),
+    # path('accounts/', include('allauth.urls')),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    # path('dj-rest-auth/registration', include('dj_rest_auth.registration')),
     path('auth/linkedin/', account_views.LinkedInConnect.as_view()),
-    path('auth/linkedin/callback/', account_views.linkedin_callback, name='linkedin_callback'),
-    path('auth/linkedin/login/', linkedin_views.oauth2_login),
+    path('auth/linkedin/login/', linkedin_views.oauth2_login, name='linkedin_login'),
+    path('auth/linkedin/callback/', account_views.linkedin_callback, name='linkedin_oauth2_callback'),
     # API Route Version Control
     path('api/v1/', include(router.urls)),
     # Custom Routes
