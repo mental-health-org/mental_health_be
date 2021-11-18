@@ -120,11 +120,11 @@ SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_
 # }
 
 SOCIALACCOUNT_PROVIDERS = {
-    'linkedin': {
-        'APP': {
-            'client_id': os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY'),
-            'client_secret': os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'),
-        },
+    'linkedin_oauth2': {
+        # 'APP': {
+        #     'client_id': os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY'),
+        #     'client_secret': os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'),
+        # },
         'SCOPE': [
             'r_basicprofile',
             'r_emailaddress'
@@ -134,8 +134,9 @@ SOCIALACCOUNT_PROVIDERS = {
             'first-name',
             'last-name',
             'email-address',
-            'picture-url',
-            'public-profile-url',
+            'headline',
+            'positions',
+            'industry',
         ]
     }
 }
@@ -172,6 +173,8 @@ CORS_ALLOW_HEADERS = [
 
 ROOT_URLCONF = 'mental_health.urls'
 # LOGIN_REDIRECT_URL = 'https://mental-health-fe.herokuapp.com'
+LOGIN_REDIRECT_URL = 'https://developer-mental-health-org.herokuapp.com/auth/linkedin/'
+
 
 TEMPLATES = [
     {
