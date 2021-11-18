@@ -1,9 +1,10 @@
+import urllib.parse
+
 from allauth.socialaccount.providers.linkedin_oauth2 import views as linkedin_views
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from rest_auth.registration.views import SocialLoginView
 from django.shortcuts import redirect
 from django.urls import reverse
-import urllib.parse
+from rest_auth.registration.views import SocialLoginView
 
 class LinkedInConnect(SocialLoginView):
     client_class = OAuth2Client
