@@ -15,7 +15,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     # path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
     path('auth/', include('rest_auth.urls')),
-    path('auth/linkedin/login', linkedin_views.oauth2_login),
+    path('auth/linkedin/login/', linkedin_views.oauth2_login),
     path('auth/linkedin/', LinkedInConnect.as_view()),
     path('auth/linkedin/', linkedin_callback, name='linkedin_callback'),
     # API Route Version Control
