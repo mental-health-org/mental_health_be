@@ -2,7 +2,7 @@ from django.contrib import admin
 from rest_framework.authtoken.views import obtain_auth_token
 # https://github.com/pennersr/django-allauth/blob/master/allauth/socialaccount/providers/linkedin_oauth2/views.py
 from allauth.socialaccount.providers.linkedin_oauth2 import views as linkedin_views
-from accounts.views import LinkedInConnect, linkedin_callback
+from accounts.views import *
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from .router import router
@@ -14,10 +14,9 @@ urlpatterns = [
     #Oauth
     path('accounts/', include('allauth.urls')),
     # path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
-
-    path('linkedin/connect/', LinkedInConnect.as_view(), name='linkedin_connect'),
     path('auth/login/', linkedin_views.oauth2_login, name='linkedin_login'),
-    path('auth/login/callback/', linkedin_callback, name='linkedin_callback'),
+    path('auth/linkedin/', LinkedInConnect.as_view()),
+    path('auth/linkedin/', linkedin_callback, name='linkedin_callback'),
     # API Route Version Control
     path('api/v1/', include(router.urls)),
     # Custom Routes
