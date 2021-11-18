@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "https://mental-health-fe.herokuapp.com",
@@ -48,13 +48,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.linkedin_oauth2',
-    # Other Oauth ATTEMPTS
-
-    'oauth2_provider',
-    'social_django',
-    # 'drf_social_oauth2',
-
     # Third Party Dependencies
+    'social_django',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -79,9 +74,6 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
-
-        # 'drf_social_oauth2.authentication.SocialAuthentication',
     ],
 }
 
@@ -93,31 +85,11 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     # Linkedin OAuth2
     'social_core.backends.linkedin.LinkedinOAuth2',
-    # drf_social_oauth2
-    # 'drf_social_oauth2.backends.DjangoOAuth2',
 )
 
 # Linkedin configuration
 SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY'))
 SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'))
-
-# Linkedin Authentication Setting
-# SOCIALACCOUNT_PROVIDERS = {
-#     'linkedin': {
-#         'SCOPE': [
-#             'r_basicprofile',
-#             'r_emailaddress'
-#         ],
-#         'PROFILE_FIELDS': [
-#             'id',
-#             'first-name',
-#             'last-name',
-#             'email-address',
-#             'picture-url',
-#             'public-profile-url',
-#         ]
-#     }
-# }
 
 # ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'https://localhost:8000/auth/linkedin/callback/'
 # LOGIN_REDIRECT_URL = 'http://localhost:8000/auth/linkedin/callback/'
@@ -126,10 +98,6 @@ LOGIN_REDIRECT_URL = 'https://developer-mental-health-org.herokuapp.com/auth/lin
 
 SOCIALACCOUNT_PROVIDERS = {
     'linkedin_oauth2': {
-        # 'APP': {
-        #     'client_id': os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY'),
-        #     'client_secret': os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'),
-        # },
         'SCOPE': [
             'r_liteprofile',
             'r_emailaddress'
@@ -139,9 +107,6 @@ SOCIALACCOUNT_PROVIDERS = {
             'first-name',
             'last-name',
             'email-address',
-            # 'headline',
-            # 'positions',
-            # 'industry',
         ]
     }
 }
@@ -177,9 +142,6 @@ CORS_ALLOW_HEADERS = [
 ]
 
 ROOT_URLCONF = 'mental_health.urls'
-# LOGIN_REDIRECT_URL = 'https://mental-health-fe.herokuapp.com'
-# LOGIN_REDIRECT_URL = 'https://developer-mental-health-org.herokuapp.com/auth/linkedin/'
-
 
 TEMPLATES = [
     {
@@ -195,12 +157,6 @@ TEMPLATES = [
 
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
-
-                # Required by allauth template tags
-                # "django.core.context_processors.request",
-                # allauth specific context processors
-                # "allauth.account.context_processors.account",
-                # "allauth.socialaccount.context_processors.socialaccount",
             ],
         },
     },

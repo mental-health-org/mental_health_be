@@ -13,7 +13,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #Oauth
     path('accounts/', include('allauth.urls')),
-    # path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
     path('auth/', include('rest_auth.urls')),
     path('auth/linkedin/', account_views.LinkedInConnect.as_view()),
     path('auth/linkedin/callback/', account_views.linkedin_callback, name='linkedin_callback'),
@@ -23,9 +22,6 @@ urlpatterns = [
     # Custom Routes
     path('api/v1/filter/questions/', question_tags_search, name = 'filter_questions'),
     path('api/v1/search/questions/', question_search, name = 'search_questions'),
-    # Authorization Routes
-    # path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-    # path('api/v1/login/', auth_views.LoginView.as_view(), name='login')
     # Password Management
     path('accounts/', include('django.contrib.auth.urls')),
 ]
