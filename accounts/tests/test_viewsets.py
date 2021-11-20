@@ -4,6 +4,26 @@ from django.urls import reverse
 from tags.models import *
 from accounts.models import *
 
+class TestAuthorizedUserViewSets(TestCase):
+    def setUp(self):
+        # Create Objects
+        self.user = User.objects.create(username = 'Orson_Wells',
+                                        email = 'test@email.com',
+                                        title = 'counselor',
+                                        password = '1a2b3c4d5e',
+                                        )
+        self.token = self.user.auth_token.key
+
+        # Get URL's
+        self.list_url = reverse("account-list")
+
+    def test_get_authorized_user(self):
+        response = self.client.post(self.list_url, {'token': self.token})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['id'], self.user.id)
+        self.assertEqual(response.data['username'], self.user.username)
+        self.assertEqual(response.data['email'], self.user.email)
+
 class TestUsersViewSets(TestCase):
     def setUp(self):
         # Create Objects
