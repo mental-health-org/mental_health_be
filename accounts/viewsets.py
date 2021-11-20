@@ -7,6 +7,17 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response as FinalResponse
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.models import Token
+from django.http import Http404
+
+class AuthorizedUserViewSet(viewsets.ViewSet):
+
+    def create(self, request):
+        try:
+            instance = Token.objects.get(key = request.data['token'])
+            serializer = UserSerializer(instance.user)
+            return FinalResponse(serializer.data)
+        except:
+            raise Http404
 
 class UsersViewSet(viewsets.ViewSet):
 
