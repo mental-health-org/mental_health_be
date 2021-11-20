@@ -21,7 +21,8 @@ class LinkedInConnect(SocialLoginView):
 def linkedin_callback(request):
     params = urllib.parse.urlencode(request.GET)
     print(params)
-    return redirect(f'https://mental-health-fe.herokuapp.com/{params}') #redirect to frontend
+    # return redirect(f'https://mental-health-fe.herokuapp.com/{params}') #redirect to frontend
+    return redirect(f'http://localhost:3000/{params}') #redirect to frontend
 
 # class UserAccountAdapter(DefaultAccountAdapter):
 #
