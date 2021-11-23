@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.models import Token
 from django.http import Http404
 
+
 class AuthorizedUserViewSet(viewsets.ViewSet):
 
     def create(self, request):
@@ -102,22 +103,3 @@ class ConnectionViewSet(viewsets.ViewSet):
 
     def perform_destroy(self, instance):
         instance.delete()
-
-# class AccountAuthBackend(object):
-#
-#     @staticmethod
-#     def authenticate(email=None, password=None):
-#         import pdb; pdb.set_trace()
-#         try:
-#             user = User.objects.get(email=email)
-#             if user.check_password(password):
-#                 return user
-#         except User.DoesNotExist:
-#             return None
-#
-#     @staticmethod
-#     def get_user(id_):
-#         try:
-#             return User.objects.get(pk=id_)
-#         except User.DoesNotExist:
-#             return None
