@@ -31,6 +31,6 @@ def populate_profile(sociallogin, user, **kwargs):
         data = user.socialaccount_set.last().extra_data
         name = data['firstName']['localized']['en_US']+data['lastName']['localized']['en_US'][0]
         user.username = name+'_'+''.join(random.sample('0123456789', 9))
-        user.title = 'Linked In User'
+        user.title = 'LinkedIn User'
 
     user.save()
