@@ -7,10 +7,9 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from dj_rest_auth.registration.views import SocialLoginView
 from .models import *
+from django.dispatch import receiver
 import random
 from allauth.account.signals import user_signed_up
-from rest_framework.response import Response as FinalResponse
-from rest_framework import status
 
 class LinkedInConnect(SocialLoginView):
     client_class = OAuth2Client
