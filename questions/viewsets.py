@@ -1,4 +1,4 @@
-from account.models import *
+from accounts.models import *
 from questions.models import *
 from questions.serializers import *
 from rest_framework.response import Response as FinalResponse

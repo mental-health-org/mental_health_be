@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "https://mental-health-fe.herokuapp.com",
@@ -36,15 +36,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'corsheaders',
+    'django.contrib.sites',
     # Apps
-    'account',
+    'accounts',
     'questions',
     'responses',
     'tags',
     # oauth
-    'oauth2_provider',
-    'social_django',
-    'drf_social_oauth2',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.linkedin_oauth2',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
     # Third Party Dependencies
     'rest_framework',
     'rest_framework.authtoken',
@@ -70,41 +74,37 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
-        'drf_social_oauth2.authentication.SocialAuthentication',
     ],
 }
 
-AUTH_USER_MODEL = 'account.User'
-
-AUTHENTICATION_BACKENDS = (
-    # Linkedin OAuth2
-    'social_core.backends.linkedin.LinkedinOAuth2',
-    # drf_social_oauth2
-    'drf_social_oauth2.backends.DjangoOAuth2',
-    # Django
-    'django.contrib.auth.backends.ModelBackend',
-)
+AUTH_USER_MODEL = 'accounts.User'
+SITE_ID = 2
 
 # Linkedin configuration
 SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY'))
 SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'))
 
-# Linkedin Authentication Setting
+ACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 SOCIALACCOUNT_PROVIDERS = {
-    'linkedin': {
+    'linkedin_oauth2': {
         'SCOPE': [
-            'r_basicprofile',
-            'r_emailaddress'
+            'r_emailaddress',
+            'r_liteprofile',
         ],
         'PROFILE_FIELDS': [
             'id',
-            'first-name',
-            'last-name',
-            'email-address',
-            'picture-url',
-            'public-profile-url',
-        ]
+            'firstName',
+            'lastName',
+            'emailAddress',
+        ],
+        'VERIFIED_EMAIL' : True
     }
 }
 
@@ -151,15 +151,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'mental_health.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -174,6 +171,13 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -195,6 +199,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# SOCIALACCOUNT_QUERY_EMAIL = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
