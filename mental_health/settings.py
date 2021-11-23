@@ -80,34 +80,31 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'accounts.User'
 SITE_ID = 2
 
-AUTHENTICATION_BACKENDS = (
-    'allauth.account.auth_backends.AuthenticationBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
 # Linkedin configuration
 SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY'))
 SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = str(os.getenv('SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET'))
 
-# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'https://localhost:8000/auth/linkedin/callback/'
-# LOGIN_REDIRECT_URL = 'http://localhost:8000/auth/linkedin/callback/'
-# LOGIN_REDIRECT_URL = 'https://developer-mental-health-org.herokuapp.com/auth/linkedin/callback/'
+ACCOUNT_EMAIL_VERIFICATION = "none"
+SOCIALACCOUNT_QUERY_EMAIL = True
 
-# ACCOUNT_ADAPTER = 'accounts.views.UserAccountAdapter'
-# SOCIALACCOUNT_ADAPTER = 'accounts.views.UserAccountAdapter'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 SOCIALACCOUNT_PROVIDERS = {
     'linkedin_oauth2': {
         'SCOPE': [
+            'r_emailaddress',
             'r_liteprofile',
-            'r_emailaddress'
         ],
         'PROFILE_FIELDS': [
             'id',
-            'first-name',
-            'last-name',
-            'email-address',
-        ]
+            'firstName',
+            'lastName',
+            'emailAddress',
+        ],
+        'VERIFIED_EMAIL' : True
     }
 }
 
@@ -201,6 +198,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# SOCIALACCOUNT_QUERY_EMAIL = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

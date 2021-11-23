@@ -12,7 +12,7 @@ urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
     #Oauth
-    # path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.urls')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     # path('dj-rest-auth/registration', include('dj_rest_auth.registration')),
     path('auth/linkedin/', account_views.LinkedInConnect.as_view()),
