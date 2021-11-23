@@ -1,18 +1,20 @@
 import urllib.parse
+from django.conf import settings
 
 from allauth.socialaccount.providers.linkedin_oauth2 import views as linkedin_views
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.shortcuts import redirect
-# from accounts.models import *
 from django.urls import reverse
-# from allauth.account.adapter import DefaultAccountAdapter
-# from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from dj_rest_auth.registration.views import SocialLoginView
+from .models import *
+import random
+from allauth.account.signals import user_signed_up
+from rest_framework.response import Response as FinalResponse
+from rest_framework import status
 
 class LinkedInConnect(SocialLoginView):
     client_class = OAuth2Client
     adapter_class = linkedin_views.LinkedInOAuth2Adapter
-    # callback_url = 'linkedin_oauth2_callback'
 
     @property
     def callback_url(self):
@@ -24,20 +26,12 @@ def linkedin_callback(request):
     # return redirect(f'https://mental-health-fe.herokuapp.com/{params}') #redirect to frontend
     return redirect(f'http://localhost:3000/{params}') #redirect to frontend
 
-# class UserAccountAdapter(DefaultAccountAdapter):
-#
-#     def new_user(self, request):
-#         import pdb; pdb.set_trace()
-#         return
+@receiver(user_signed_up)
+def populate_profile(sociallogin, user, **kwargs):
+    if sociallogin.account.provider == 'linkedin_oauth2':
+        data = user.socialaccount_set.last().extra_data
+        name = data['firstName']['localized']['en_US']+data['lastName']['localized']['en_US'][0]
+        user.username = name+'_'+''.join(random.sample('0123456789', 9))
+        user.title = 'Linked In User'
 
-    # def save_user(self, request, user, form, commit=True):
-    #
-    #     import pdb; pdb.set_trace()
-    #     user = super(UserAccountAdapter, self).save_user(request)
-    #     user.save()
-
-# class UserAccountAdapter(DefaultSocialAccountAdapter):
-#
-#     def new_user(self, request, sociallogin):
-#         import pdb; pdb.set_trace()
-#         return
+    user.save()
