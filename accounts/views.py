@@ -28,7 +28,7 @@ def linkedin_callback(request):
 def populate_profile(sociallogin, user, **kwargs):
     if sociallogin.account.provider == 'linkedin_oauth2':
         data = user.socialaccount_set.last().extra_data
-        name = data['firstName']['localized']['en_US']+data['lastName']['localized']['en_US'][0]
+        name = data['firstName']['localized']['en_US'][0]+data['lastName']['localized']['en_US'][0]
         user.username = name+'_'+''.join(random.sample('0123456789', 9))
         user.title = 'LinkedIn User'
 
