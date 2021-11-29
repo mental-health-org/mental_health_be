@@ -65,3 +65,13 @@ class TestTagMethods(TestCase):
         formatted = format_tags(self.tags_empty)
         self.assertEqual(len(formatted), 1)
 
+    def test_create_tags(self):
+        new_post = Post.objects.create(title = "title")
+        Tag.objects.create(name = "Tag Two")
+
+        self.assertEqual(len(Tag.objects.all()), 1)
+        create_tags(self.formatted_tags, new_post)
+        self.assertEqual(len(Tag.objects.all()), 3)
+        self.assertEqual(new_post.tagging.all()[0].name, self.formatted_tags[0])
+        self.assertEqual(new_post.tagging.all()[1].name, self.formatted_tags[1])
+        self.assertEqual(new_post.tagging.all()[2].name, self.formatted_tags[2])
