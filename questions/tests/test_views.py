@@ -61,3 +61,7 @@ class TestTagMethods(TestCase):
         self.assertEqual(formatted[1], self.formatted_tags[1])
         self.assertEqual(formatted[2], self.formatted_tags[2])
 
+    def test_formatting_tags_no_empty(self):
+        formatted = format_tags(self.tags_empty)
+        self.assertEqual(len(formatted), 1)
+
