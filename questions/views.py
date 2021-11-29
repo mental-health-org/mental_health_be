@@ -27,3 +27,24 @@ def question_tags_search(request):
     results = Post.objects.filter(tagging__name=tags)
     serializer = QuestionsSerializer(results, many=True)
     return FinalResponse(serializer.data, status=status.HTTP_200_OK)
+
+def format_tags(tags_data):
+    formatted_tags = []
+    for tag in tags_data:
+        if not tag.strip():
+            pass
+        else:
+            formatted_tags.append(tag.strip().lower().title())
+    return formatted_tags
+
+def create_tags(formatted_tags, new_post):
+
+    for tag in formatted_tags:
+        if not tag:
+            pass
+        elif not Tag.objects.filter(name=tag):
+            new_tag = Tag.objects.create(name=tag)
+            new_post.tagging.add(new_tag.id)
+        else:
+            existing_tag = Tag.objects.filter(name=tag).last()
+            new_post.tagging.add(existing_tag.id)
