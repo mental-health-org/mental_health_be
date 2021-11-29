@@ -27,3 +27,13 @@ def question_tags_search(request):
     results = Post.objects.filter(tagging__name=tags)
     serializer = QuestionsSerializer(results, many=True)
     return FinalResponse(serializer.data, status=status.HTTP_200_OK)
+
+def format_tags(tags_data):
+    formatted_tags = []
+    for tag in tags_data:
+        if not tag.strip():
+            pass
+        else:
+            formatted_tags.append(tag.strip().lower().title())
+    return formatted_tags
+
