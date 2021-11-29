@@ -2,6 +2,7 @@ from accounts.models import *
 from questions.models import *
 from questions.serializers import *
 from rest_framework.response import Response as FinalResponse
+from .views import format_tags, create_tags
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework import viewsets, status
@@ -47,20 +48,10 @@ class QuestionsViewSet(viewsets.ViewSet):
         serializer.save()
         new_post = Post.objects.filter(title=post_data['title']).last()
 
-        formatted_tags = []
-        for tag in tags_data:
-            formatted_tags.append(tag.strip().lower().title())
-
-        for tag in formatted_tags:
-            if not Tag.objects.filter(name=tag):
-                new_tag = Tag.objects.create(name=tag)
-                new_post.tagging.add(new_tag.id)
-            else:
-                existing_tag = Tag.objects.filter(name=tag).last()
-                new_post.tagging.add(existing_tag.id)
+        formatted_tags = format_tags(tags_data)
+        create_tags(formatted_tags, new_post)
 
         response =  header_serializer('questions', {'question': serializer.data, 'tags': formatted_tags})
-
         return FinalResponse(response, status=status.HTTP_201_CREATED)
 
 class QuestionVoteViewSet(viewsets.ViewSet):
